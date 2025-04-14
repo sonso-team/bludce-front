@@ -4,8 +4,8 @@ import './paragraph.scss';
 
 interface ParagraphPropsI {
   children: string | ReactElement;
-  level: 1 | 2 | 3 | 4;
-  mode?: 'default' | 'link';
+  level: 1 | 2 | 3 | 4 | 5;
+  mode?: 'default' | 'link' | 'error';
   className?: string;
 }
 

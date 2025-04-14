@@ -4,7 +4,6 @@ const cyrillicRegexp = /^[-а-яА-ЯёЁ\s]+$/;
 
 export type Validation = {
   name: string;
-  value: unknown;
   params?: object;
   message: string;
 };
@@ -27,7 +26,7 @@ const isInRange = (
 };
 
 const isEmail = (value: string): boolean => {
-  return typeof value === 'string' && emailRegexp.test(value.toLowerCase());
+  return !(typeof value === 'string' && emailRegexp.test(value.toLowerCase()));
 };
 
 const isEqualTo = (value: any, params: { compareValue: any }): boolean => {

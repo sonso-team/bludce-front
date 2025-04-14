@@ -1,0 +1,24 @@
+.WelcomeLayout {
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+
+  &__bgImage {
+    z-index: -1;
+    position: absolute;
+    height: 48vh;
+    &_down {
+      bottom: 0;
+      left: 0;
+    }
+
+    &_up {
+      top: 0;
+      right: 0;
+    }
+  }
+}

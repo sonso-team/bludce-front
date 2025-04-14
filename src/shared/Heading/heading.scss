@@ -1,4 +1,5 @@
-.paragraph {
+.heading {
+  font-weight: 600;
   letter-spacing: 0.5px;
   text-align: center;
 
@@ -12,18 +13,22 @@
   }
 
   &_level-1 {
-    font-size: 20px;
+    font-size: 64.5px;
   }
 
   &_level-2 {
-    font-size: 18px;
+    font-size: 48px;
   }
 
   &_level-3 {
-    font-size: 16px;
+    font-size: 26px;
   }
 
   &_level-4 {
-    font-size: 14px;
+    font-size: 20px;
+  }
+
+  &_level-5 {
+    font-size: 18px;
   }
 }

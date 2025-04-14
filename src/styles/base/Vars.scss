@@ -10,12 +10,21 @@ $breakpoint-5: 420px;
   --container-width: 1280px;
   // paddings
   --container-padding: 15px;
-  --default-ff: 'Sans-serif';
-  --default-text-color: #000;
+  --default-ff: 'Jost';
+  --secondary-ff: 'Unbounded';
+  --default-text-color: var(--white);
   --light-text-color: #fafafa;
   --link-text-color: #6c23d8;
-  --gray-dark: #b6b6b6;
-  --default-bg-color: #f9f3ff;
+  --dark-gray: #1f1f1f;
+  --light-gray: #4c4c4c;
+  --white: #ffffff;
+  --orange: #e6a610;
+  --orange-50: rgba(230, 166, 16, 0.5);
+  --red: #cb2a06;
+  --black: #000;
+  --black-blur: rgba(0, 0, 0, 0.56);
+  --white-50: rgba(255, 255, 255, 0.5);
+  --default-bg-color: var(--black);
   --disabled-bg: #c6c6c6;
 
   --primary-color: #5936db;

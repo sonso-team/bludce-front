@@ -1,12 +1,12 @@
 .button {
-  padding: 10px 20px;
-  border-radius: 20px;
+  padding: 18px 15px;
+  border-radius: 10px;
+  height: 60px;
   display: flex;
   text-align: center;
   max-width: min(240px, 100%);
   align-items: center;
   justify-content: center;
-  background-color: var(--light-text-color);
   transition: 0.4s;
 
   &_custom {
@@ -15,13 +15,13 @@
   }
 
   &_primary {
-    color: var(--light-text-color);
-    background-color: var(--primary-color);
+    color: var(--white);
+    background-color: var(--orange);
     &:disabled {
-      background-color: var(--gray-dark);
+      background-color: var(--orange-50);
     }
     &:hover:not(:disabled) {
-      background-color: #3d06f1;
+      background-color: var(--orange-50);
     }
   }
 

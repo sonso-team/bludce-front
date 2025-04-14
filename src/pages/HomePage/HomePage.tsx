@@ -1,43 +1,40 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import './home-page.scss';
-import { Button } from '../../components/Button';
-import { useModal } from '../../utils/useModal';
+import type { InputRef } from '../../shared/Input';
+import { Input } from '../../shared/Input';
+import { Heading } from '../../shared/Heading';
 
 const HomePage: React.FC = () => {
-  const { showModal } = useModal();
-
-  const configBasic = {
-    icon: 'error',
-    title: 'Ошибка',
-    body: 'Пользователь с таким именем уже существует',
-  };
-
-  const CustomBody = ({ ...props }) => {
-    return (
-      <div>
-        <span>Привет</span>
-        <button onClick={props.closeHandler}>Нажми на меня братан</button>
-      </div>
-    );
-  };
-
-  const configOverrideTest = {
-    overrideContent: <CustomBody />,
-  };
-  const clickHandler = () => {
-    showModal(configBasic);
-  };
-
-  const clickHandler2 = () => {
-    showModal(configOverrideTest);
-  };
-
+  const inputRef = useRef<InputRef>(null);
   return (
     <div className="HomePage">
-      <div className="HomePage__buttons">
-        <Button onClick={clickHandler}>Открытие модалки</Button>
-        <Button onClick={clickHandler2}>Открытие модалки</Button>
-      </div>
+      <Heading level={2}>БЛЮДЦЕ</Heading>
+      <Input
+        placeholder="Имя"
+        name="name"
+        initialValue=""
+        validations={[
+          {
+            name: 'isEmpty',
+            message: 'Введите корректные данные',
+          },
+        ]}
+        ref={inputRef}
+      />
+      <Input
+        placeholder="Почта"
+        name="name"
+        initialValue=""
+        validations={[]}
+        ref={inputRef}
+      />
+      <Input
+        placeholder="Номер телефона"
+        name="name"
+        initialValue=""
+        validations={[]}
+        ref={inputRef}
+      />
     </div>
   );
 };

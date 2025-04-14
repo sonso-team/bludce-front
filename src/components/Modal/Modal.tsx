@@ -2,10 +2,10 @@ import React from 'react';
 import type { ModalConfigI } from '../../HOC/ModalProvider';
 import { useModal } from '../../utils/useModal';
 import './modal.scss';
-import { Heading } from '../Heading';
-import { Paragraph } from '../Paragraph';
-import { Button } from '../Button';
 import { iconMap } from '../../utils/iconMap';
+import { Heading } from '../../shared/Heading';
+import { Button } from '../../shared/Button';
+import { Paragraph } from '../../shared/Paragraph';
 
 type ModalPropsI = ModalConfigI;
 

@@ -1,21 +1,34 @@
+export interface IUser {
+  id: string;
+  phoneNumber: string;
+  email: string;
+}
+
+export interface ISendCondeRequest {
+  contact: string;
+}
 export interface IAuthResponse {
-  username: string;
+  user: IUser;
   token: string;
-  error?: string;
+  message?: string;
 }
 
 export interface IAuthData {
-  login: string;
-  password: string;
+  login?: string;
+  name?: string;
+  email?: string;
+  phoneNumber?: string;
+  password?: string;
 }
 
 export interface IAuthError {
-  error: string;
+  message: string;
 }
 
 export interface IAuthState {
   isLoading: boolean;
   isAuth: boolean;
-  userData: IAuthResponse | null;
-  error: string | null;
+  user: IUser | null;
+  message: string | null;
+  goConfirmStep: boolean;
 }
