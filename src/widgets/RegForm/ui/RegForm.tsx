@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Input } from '../../../shared/Input';
 import { Heading } from '../../../shared/Heading';
 import { ConfirmPersonalData } from '../../../components/ConfirmPersonalData';
 import { Button } from '../../../shared/Button';
 import { useRegForm } from '../api';
+import { Paragraph } from '../../../shared/Paragraph';
 
 export const RegForm: React.FC = () => {
   const {
@@ -81,6 +83,15 @@ export const RegForm: React.FC = () => {
       >
         Зарегистрироваться
       </Button>
+      <Paragraph level={4}>
+        Есть аккаунт ?{' '}
+        <Link
+          to="/auth/login"
+          className="AuthPage__link"
+        >
+          Войти
+        </Link>
+      </Paragraph>
     </>
   );
 };

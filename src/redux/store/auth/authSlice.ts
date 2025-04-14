@@ -10,7 +10,7 @@ import {
 } from './authThunks.ts';
 
 const initialState: IAuthState = {
-  isLoading: false,
+  isLoading: true,
   isAuth: false,
   user: null,
   message: null,
@@ -23,6 +23,9 @@ const authSlice = createSlice({
   reducers: {
     setLogin(state, action: PayloadAction<{ login: string }>) {
       state.user = { phoneNumber: action.payload.login, id: null, email: null };
+    },
+    setGoConfirmStep(state, action: PayloadAction<boolean>) {
+      state.goConfirmStep = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -81,10 +84,10 @@ const authSlice = createSlice({
       .addCase(
         refresh.fulfilled,
         (state, action: PayloadAction<IAuthResponse>) => {
-          state.isLoading = false;
           state.user = action.payload.user;
           localStorage.setItem('token', action.payload.token);
           state.isAuth = true;
+          state.isLoading = false;
         },
       )
       .addCase(refresh.rejected, (state, action) => {
@@ -95,13 +98,10 @@ const authSlice = createSlice({
         state.isLoading = true;
         state.message = null;
       })
-      .addCase(
-        sendCode.fulfilled,
-        (state, action: PayloadAction<IAuthResponse>) => {
-          state.isLoading = false;
-          state.goConfirmStep = true;
-        },
-      )
+      .addCase(sendCode.fulfilled, (state) => {
+        state.goConfirmStep = true;
+        state.isLoading = false;
+      })
       .addCase(sendCode.rejected, (state, action) => {
         state.isLoading = false;
         state.message = action.payload.message;
@@ -109,5 +109,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { setLogin } = authSlice.actions;
+export const { setLogin, setGoConfirmStep } = authSlice.actions;
 export default authSlice.reducer;

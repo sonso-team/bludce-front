@@ -1,9 +1,9 @@
+import type { ReactNode } from 'react';
 import React from 'react';
-import type { ReactElement } from 'react';
 import './paragraph.scss';
 
 interface ParagraphPropsI {
-  children: string | ReactElement;
+  children: string | ReactNode;
   level: 1 | 2 | 3 | 4 | 5;
   mode?: 'default' | 'link' | 'error';
   className?: string;

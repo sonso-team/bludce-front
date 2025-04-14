@@ -3,10 +3,6 @@ export interface IUser {
   phoneNumber: string;
   email: string;
 }
-
-export interface ISendCondeRequest {
-  contact: string;
-}
 export interface IAuthResponse {
   user: IUser;
   token: string;

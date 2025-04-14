@@ -1,17 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import type { CheckboxRef } from '../../../shared/Checkbox';
 import type { InputRef } from '../../../shared/Input';
 import { hideLocalLoader, showLocalLoader } from '../../../redux/store/loader';
-import {
-  login,
-  registration,
-  sendCode,
-} from '../../../redux/store/auth/authThunks';
-import { unmaskPhoneNumber } from '../../../utils/format';
+import { login } from '../../../redux/store/auth/authThunks';
 
 export const useConfirmForm = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const authState = useAppSelector((state) => state.authReducer);
   const [isValid, setIsValid] = useState<boolean>(false);
   const codeRef = useRef<InputRef>(null);
@@ -22,13 +18,19 @@ export const useConfirmForm = () => {
     } else {
       dispatch(hideLocalLoader());
     }
-  }, [authState.isLoading]);
+  }, [dispatch, authState.isLoading]);
+
+  useEffect(() => {
+    if (authState.isAuth) {
+      navigate('/home');
+    }
+  }, [dispatch, authState.isAuth]);
 
   const submitHandler = () => {
     dispatch(
       login({
         login: authState.user.phoneNumber,
-        password: '123123',
+        password: codeRef.current.value,
       }),
     );
   };

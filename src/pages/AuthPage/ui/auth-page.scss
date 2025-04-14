@@ -15,4 +15,9 @@
   &__title {
     font-family: var(--secondary-ff), sans-serif;
   }
+
+  a.AuthPage__link {
+    text-decoration: underline;
+    color: var(--orange);
+  }
 }

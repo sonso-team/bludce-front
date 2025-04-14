@@ -86,7 +86,7 @@ const sendCode = createAsyncThunk<
 >('auth/sendCode', async ({ phoneNumber }, { rejectWithValue }) => {
   try {
     const response: AxiosResponse = await api.post(AUTH_SEND_CODE, {
-      contact: phoneNumber,
+      login: phoneNumber,
     });
     return response.data;
   } catch (error) {

@@ -1,8 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Input } from '../../../shared/Input';
 import { Heading } from '../../../shared/Heading';
 import { Button } from '../../../shared/Button';
 import { useLoginForm } from '../api';
+import { Paragraph } from '../../../shared/Paragraph';
 
 export const LoginForm: React.FC = () => {
   const { isValid, getIsValid, setIsValid, submitHandler, loginRef } =
@@ -38,6 +40,15 @@ export const LoginForm: React.FC = () => {
       >
         Продолжить
       </Button>
+      <Paragraph level={4}>
+        Нет аккаунта ?{' '}
+        <Link
+          to="/auth/registration"
+          className="AuthPage__link"
+        >
+          Зарегистрироваться
+        </Link>
+      </Paragraph>
     </>
   );
 };
