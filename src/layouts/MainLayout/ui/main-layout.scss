@@ -1,0 +1,11 @@
+.MainLayout {
+  background-image: url('/src/assets/images/bg-main.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+}
