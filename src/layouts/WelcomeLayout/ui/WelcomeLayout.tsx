@@ -1,8 +1,8 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import './welcome-layout.scss';
-import bludceUp from './../../assets/images/bludce.png';
-import bludceDown from './../../assets/images/bludce-down.png';
+import bludceUp from '../../../assets/images/bludce.png';
+import bludceDown from '../../../assets/images/bludce-down.png';
 
 export const WelcomeLayout: React.FC = () => {
   return (

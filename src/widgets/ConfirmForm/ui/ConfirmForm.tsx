@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Input } from '../../../shared/Input';
 import { Heading } from '../../../shared/Heading';
 import { Button } from '../../../shared/Button';
 import { useConfirmForm } from '../api';
+import { Paragraph } from '../../../shared/Paragraph';
+import { useAppDispatch } from '../../../redux/hooks';
+import { setGoConfirmStep } from '../../../redux/store/auth';
 
 export const ConfirmForm: React.FC = () => {
+  const dispatch = useAppDispatch();
   const { isValid, getIsValid, setIsValid, submitHandler, codeRef } =
     useConfirmForm();
+
+  useEffect(() => {
+    dispatch(setGoConfirmStep(false));
+  }, [dispatch]);
+
   return (
     <>
       <Heading
@@ -38,6 +48,15 @@ export const ConfirmForm: React.FC = () => {
       >
         Подтвердить почту
       </Button>
+      <Paragraph level={4}>
+        Неправильный номер ?{' '}
+        <Link
+          to="/auth/"
+          className="AuthPage__link"
+        >
+          Назад
+        </Link>
+      </Paragraph>
     </>
   );
 };

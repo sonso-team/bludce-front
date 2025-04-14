@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import type { InputRef } from '../../../shared/Input';
 import { hideLocalLoader, showLocalLoader } from '../../../redux/store/loader';
-import { login, sendCode } from '../../../redux/store/auth/authThunks';
+import { sendCode } from '../../../redux/store/auth/authThunks';
 import { setLogin } from '../../../redux/store/auth';
 import { unmaskPhoneNumber } from '../../../utils/format';
 
@@ -25,16 +25,15 @@ export const useLoginForm = () => {
         navigate('/auth/confirm');
       }
     }
-  }, [isLoading]);
+  }, [dispatch, isLoading]);
 
   const submitHandler = () => {
     dispatch(setLogin({ login: unmaskPhoneNumber(loginRef.current.value) }));
-    navigate('/auth/confirm');
-    // dispatch(
-    //   sendCode({
-    //     phoneNumber: loginRef.current.value,
-    //   }),
-    // );
+    dispatch(
+      sendCode({
+        phoneNumber: unmaskPhoneNumber(loginRef.current.value),
+      }),
+    );
   };
   const getIsValid = useCallback(() => {
     return !loginRef.current?.isError && loginRef.current?.isDirty;
