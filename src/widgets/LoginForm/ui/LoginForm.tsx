@@ -5,6 +5,7 @@ import { Heading } from '../../../shared/Heading';
 import { Button } from '../../../shared/Button';
 import { useLoginForm } from '../api';
 import { Paragraph } from '../../../shared/Paragraph';
+import { maskPhoneNumber } from '../../../utils/format';
 
 export const LoginForm: React.FC = () => {
   const { isValid, getIsValid, setIsValid, submitHandler, loginRef } =
@@ -25,10 +26,15 @@ export const LoginForm: React.FC = () => {
           name="name"
           ref={loginRef}
           onChange={() => setIsValid(getIsValid())}
+          mask={maskPhoneNumber}
           validations={[
             {
               name: 'isEmpty',
               message: 'Введите логин',
+            },
+            {
+              name: 'isInvalidPhoneNumber',
+              message: 'Введен некорректный номер телефона',
             },
           ]}
         />

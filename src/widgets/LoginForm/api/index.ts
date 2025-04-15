@@ -35,6 +35,7 @@ export const useLoginForm = () => {
       }),
     );
   };
+
   const getIsValid = useCallback(() => {
     return !loginRef.current?.isError && loginRef.current?.isDirty;
   }, []);
