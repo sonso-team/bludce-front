@@ -2,13 +2,25 @@ const emailRegexp =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const cyrillicRegexp = /^[-а-яА-ЯёЁ\s]+$/;
 
+const phoneRegexp = /^7\d{10}$/;
+
 export type Validation = {
   name: string;
   params?: object;
   message: string;
 };
 
-const isEmpty = (value: any): boolean => {
+export const isInvalidPhoneNumber = (value: string): boolean => {
+  const digits = value.replace(/\D/g, '');
+
+  // Преобразуем 8 в 7 для единообразия
+  const normalized = digits.replace(/^8/, '7');
+
+  // Проверяем, что начинается с 7 и всего 11 цифр
+  return !phoneRegexp.test(normalized);
+};
+
+const isEmpty = (value: unknown): boolean => {
   return (
     value === null ||
     value === undefined ||
@@ -29,7 +41,10 @@ const isEmail = (value: string): boolean => {
   return !(typeof value === 'string' && emailRegexp.test(value.toLowerCase()));
 };
 
-const isEqualTo = (value: any, params: { compareValue: any }): boolean => {
+const isEqualTo = (
+  value: unknown,
+  params: { compareValue: unknown },
+): boolean => {
   return value === params.compareValue;
 };
 
@@ -43,4 +58,5 @@ export const Validator = {
   isEmail,
   isEqualTo,
   isCyrillic,
+  isInvalidPhoneNumber,
 };

@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import type { InputRef } from '../../../shared/Input';
 import { hideLocalLoader, showLocalLoader } from '../../../redux/store/loader';
 import { login } from '../../../redux/store/auth/authThunks';
+import type { OTPInputRef } from '../../../components/OtpInput';
 
 export const useConfirmForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const authState = useAppSelector((state) => state.authReducer);
   const [isValid, setIsValid] = useState<boolean>(false);
-  const codeRef = useRef<InputRef>(null);
+  const codeRef = useRef<OTPInputRef>(null);
 
   useEffect(() => {
     if (authState.isLoading) {
@@ -34,15 +34,16 @@ export const useConfirmForm = () => {
       }),
     );
   };
+
   const getIsValid = useCallback(() => {
-    return !codeRef.current?.isError && codeRef.current?.isDirty;
+    return codeRef.current?.isValid;
   }, []);
 
   return {
-    getIsValid,
-    setIsValid,
-    isValid,
     submitHandler,
     codeRef,
+    setIsValid,
+    getIsValid,
+    isValid,
   };
 };

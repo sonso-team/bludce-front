@@ -1,6 +1,4 @@
-import type { RefObject } from 'react';
 import React, {
-  useEffect,
   forwardRef,
   useRef,
   useImperativeHandle,
@@ -11,17 +9,12 @@ import type { Validation } from '../../utils/validator';
 import { Validator } from '../../utils/validator';
 import './input.scss';
 import { Paragraph } from '../Paragraph';
-import { login } from '../../redux/store/auth/authThunks';
 
 export interface InputRef {
   value?: string;
   isDirty?: boolean;
   isValueHidden?: boolean;
   isError?: boolean;
-  // value?: RefObject<string>;
-  // isDirty?: RefObject<boolean>;
-  // isError?: RefObject<boolean>;
-  // isValueHidden?: RefObject<boolean>;
 }
 
 export interface InputPropsI {
@@ -29,6 +22,7 @@ export interface InputPropsI {
   type?: string;
   validations?: Validation[] | [];
   name: string;
+  mask?: (value: string) => string;
   placeholder: string;
   className?: string;
   onChange?: (event?: React.ChangeEvent<HTMLInputElement>) => void;
@@ -42,6 +36,7 @@ export const Input = forwardRef<InputRef, InputPropsI>((props, ref) => {
     className,
     validations = [],
     name,
+    mask = null,
     placeholder,
     onChange,
   } = props;
@@ -49,36 +44,10 @@ export const Input = forwardRef<InputRef, InputPropsI>((props, ref) => {
   const inputEl = useRef<HTMLInputElement | null>(null);
 
   const [value, setValue] = useState<string>(initialValue);
-  // const [isDirty, setIsDirty] = useState<boolean>(false);
-  // const value = useRef<string>(initialValue);
   const isDirty = useRef(false);
-  // const [isValueHidden, setIsValueHidden] = useState<boolean>(true);
   const isValueHidden = useRef(true);
-  // const [errors, setErrors] = useState<Record<string, string>>({});
   const errors = useRef<object>({});
-  // const [isError, setIsError] = useState<boolean>(false);
   const isError = useRef(false);
-
-  // useEffect(() => {
-  //   isError.current = Object.values(errors).length !== 0;
-  //   console.log(isError.current);
-  // }, [errors]);
-
-  // useEffect(() => {
-  //   if (!isDirty.current) {
-  //     return;
-  //   }
-  //   setErrors({});
-  //   validations.forEach((validation: Validation) => {
-  //     const isError = Validator[validation.name](...[value, validation.params]);
-  //     if (isError) {
-  //       setErrors((prev) => ({
-  //         ...prev,
-  //         [validation.name]: validation.message,
-  //       }));
-  //     }
-  //   });
-  // }, [value]);
 
   useImperativeHandle(ref, () => {
     return {
@@ -108,7 +77,11 @@ export const Input = forwardRef<InputRef, InputPropsI>((props, ref) => {
       }
     });
     isError.current = Object.values(errors.current).length !== 0;
-    setValue(e.target.value);
+    if (mask) {
+      setValue(mask(e.target.value));
+    } else {
+      setValue(e.target.value);
+    }
     // ToDo Убрать этот костыль
     setTimeout(() => onChange?.(e), 0);
   };

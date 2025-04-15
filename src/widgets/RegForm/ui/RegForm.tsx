@@ -6,6 +6,7 @@ import { ConfirmPersonalData } from '../../../components/ConfirmPersonalData';
 import { Button } from '../../../shared/Button';
 import { useRegForm } from '../api';
 import { Paragraph } from '../../../shared/Paragraph';
+import { maskPhoneNumber } from '../../../utils/format';
 
 export const RegForm: React.FC = () => {
   const {
@@ -60,6 +61,7 @@ export const RegForm: React.FC = () => {
         />
         <Input
           placeholder="Номер"
+          mask={maskPhoneNumber}
           initialValue=""
           name="phone"
           ref={phoneRef}
@@ -68,6 +70,10 @@ export const RegForm: React.FC = () => {
             {
               name: 'isEmpty',
               message: 'Введите номер',
+            },
+            {
+              name: 'isInvalidPhoneNumber',
+              message: 'Введен некорректный номер телефона',
             },
           ]}
         />
