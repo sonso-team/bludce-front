@@ -23,26 +23,26 @@ export const AppRouter: React.FC = () => {
           element={<AuthPage />}
         />
       </Route>
-      {/* <Route element={<PrivateRoute />}> */}
-      <Route element={<MainLayout />}>
-        <Route
-          path="/home"
-          element={<HomePage />}
-        />
-        <Route
-          path="/approve"
-          element={<ApprovePage />}
-        />
-        <Route
-          path="/account"
-          element={<AccountPage />}
-        />
-        <Route
-          path="/history"
-          element={<HistoryPage />}
-        />
+      <Route element={<PrivateRoute />}>
+        <Route element={<MainLayout />}>
+          <Route
+            path="/home"
+            element={<HomePage />}
+          />
+          <Route
+            path="/approve"
+            element={<ApprovePage />}
+          />
+          <Route
+            path="/account"
+            element={<AccountPage />}
+          />
+          <Route
+            path="/history"
+            element={<HistoryPage />}
+          />
+        </Route>
       </Route>
-      {/* </Route> */}
     </Routes>
   );
 };

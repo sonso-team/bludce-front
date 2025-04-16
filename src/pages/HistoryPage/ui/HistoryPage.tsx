@@ -4,20 +4,13 @@ import { Heading } from '../../../shared/Heading';
 import { Paragraph } from '../../../shared/Paragraph';
 import './history-page.scss';
 import { HistoryItem } from '../../../components/HistoryItem';
+import { useAppSelector } from '../../../redux/hooks';
 
 const HistoryPage: React.FC = () => {
-  // const dispatch = useAppDispatch();
-  // const { billsData, isLoading, isFetched } = useAppSelector(
-  //   (state) => state.billsReducer,
-  // );
+  const { historyData, isLoading, isFetched } = useAppSelector(
+    (state) => state.historyReducer,
+  );
 
-  // const finalAmount = useMemo(() => {
-  //   return billsData.reduce((acc: number, item) => acc + item.price, 0);
-  // }, [billsData]);
-
-  // if (!billsData.length) {
-  //   return <Navigate to="/home" />;
-  // }
   //Я ЕБЛАН, НАЧАЛ ДЕЛАТЬ СТРАНИЦУ АККАУНТА А ПОТОМ ЗАБЫЛ И НАЧАЛ ХУЯЧИТЬ СТРАНИЦУ ИСТОРИИ
   return (
     <div className="HistoryPage">
@@ -31,14 +24,14 @@ const HistoryPage: React.FC = () => {
         </Heading>
       </header>
       <div className="HistoryPage__HistoryItemsWrapper">
-        <HistoryItem
-          date="11 сен."
-          billNumber={1488}
-        />
-        <HistoryItem
-          date="11 сен."
-          billNumber={1488}
-        />
+        {historyData.map((item) => (
+          <HistoryItem
+            key={item.id}
+            date={item.date}
+            billNumber={item.billNumber}
+            link={item.link}
+          />
+        ))}
       </div>
     </div>
   );

@@ -18,7 +18,26 @@ export type BillItem = {
   price: number;
 };
 
-export interface IBillResponse {
+export type BillInitiator = {
+  id: string;
+  phoneNumber: string;
+  email: string;
+};
+// все что приходит по чеку
+export interface Bill {
+  receiptId: string;
+  receiptType: string;
+  tipsType: string;
+  tipsPercent: number;
+  personCount: number;
+  createdAt: string;
+  updatedAt: string;
+  initiator: BillInitiator;
+  positions: BillItem[];
+}
+
+export interface ConfirmBillResponse {
   receiptId: string;
 }
+
 export type SendBillResponse = BillItem[];

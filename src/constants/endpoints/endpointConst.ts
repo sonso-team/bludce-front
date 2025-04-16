@@ -8,6 +8,8 @@ const AUTH_LOGOUT: string = '/auth/logout';
 const BILL_SEND: string = '/receipt';
 const BILL_CONFIRM: string = '/receipt/position';
 
+const HISTORY_GET: string = '/receipt/history';
+
 export {
   API_URL,
   AUTH_REFRESH,
@@ -17,4 +19,5 @@ export {
   AUTH_SEND_CODE,
   BILL_SEND,
   BILL_CONFIRM,
+  HISTORY_GET,
 };

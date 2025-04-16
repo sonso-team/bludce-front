@@ -8,8 +8,8 @@ import api from '../../../services/axios/api.ts';
 import type {
   BillData,
   BillItem,
+  ConfirmBillResponse,
   IBillError,
-  IBillResponse,
   SendBillResponse,
 } from './types';
 
@@ -37,12 +37,12 @@ const sendBill = createAsyncThunk<
 });
 
 const confirmBill = createAsyncThunk<
-  IBillResponse,
+  ConfirmBillResponse,
   BillItem[],
   { rejectValue: IBillError }
 >('bill/confirm', async (billData, { rejectWithValue }) => {
   try {
-    const response: AxiosResponse<IBillResponse> = await api.post(
+    const response: AxiosResponse<ConfirmBillResponse> = await api.post(
       BILL_CONFIRM,
       billData,
     );
