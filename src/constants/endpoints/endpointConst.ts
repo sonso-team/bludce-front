@@ -5,7 +5,8 @@ const AUTH_REG: string = '/auth/registration';
 const AUTH_SEND_CODE: string = '/auth/send-code';
 const AUTH_LOGOUT: string = '/auth/logout';
 
-const BILL_SEND: string = '/receipts';
+const BILL_SEND: string = '/receipt';
+const BILL_CONFIRM: string = '/receipt/position';
 
 export {
   API_URL,
@@ -15,4 +16,5 @@ export {
   AUTH_LOGIN,
   AUTH_SEND_CODE,
   BILL_SEND,
+  BILL_CONFIRM,
 };

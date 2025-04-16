@@ -37,6 +37,7 @@ const authSlice = createSlice({
       .addCase(
         login.fulfilled,
         (state, action: PayloadAction<IAuthResponse>) => {
+          console.log(11111);
           state.isLoading = false;
           state.message = action.payload.message;
           localStorage.setItem('token', action.payload.token);
