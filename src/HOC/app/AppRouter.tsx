@@ -6,6 +6,7 @@ import { AuthPage } from '../../pages/AuthPage';
 import { PrivateRoute } from '../PrivateRoute';
 import { MainLayout } from '../../layouts/MainLayout';
 import ApprovePage from '../../pages/ApprovePage/ui/ApprovePage';
+import AccountPage from '../../pages/AccountPage/ui/AccountPage';
 import HomePage from './../../pages/HomePage/HomePage.tsx';
 
 export const AppRouter: React.FC = () => {
@@ -21,18 +22,22 @@ export const AppRouter: React.FC = () => {
           element={<AuthPage />}
         />
       </Route>
-      <Route element={<PrivateRoute />}>
-        <Route element={<MainLayout />}>
-          <Route
-            path="/home"
-            element={<HomePage />}
-          />
-          <Route
-            path="/approve"
-            element={<ApprovePage />}
-          />
-        </Route>
+      {/* <Route element={<PrivateRoute />}> */}
+      <Route element={<MainLayout />}>
+        <Route
+          path="/home"
+          element={<HomePage />}
+        />
+        <Route
+          path="/approve"
+          element={<ApprovePage />}
+        />
+        <Route
+          path="/account"
+          element={<AccountPage />}
+        />
       </Route>
+      {/* </Route> */}
     </Routes>
   );
 };
