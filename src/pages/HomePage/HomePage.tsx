@@ -1,26 +1,19 @@
 import React from 'react';
 import './home-page.scss';
+import { useNavigate } from 'react-router-dom';
 import { Heading } from '../../shared/Heading';
 import { Paragraph } from '../../shared/Paragraph';
-import { Button } from '../../shared/Button';
-import { useAppDispatch } from '../../redux/hooks';
-import { logout } from '../../redux/store/auth/authThunks';
-import { hideLocalLoader, showLocalLoader } from '../../redux/store/loader';
+import { Footer } from '../../widgets/Footer';
+import { BillInput } from '../../components/BillInput';
 import bludce from './../../assets/images/bludce-full.png';
 
 const HomePage: React.FC = () => {
-  const dispatch = useAppDispatch();
-
-  const clickHandler = () => {
-    dispatch(showLocalLoader());
-    dispatch(logout()).finally(() => {
-      hideLocalLoader();
-    });
-  };
-
+  const navigate = useNavigate();
   return (
     <div className="HomePage">
-      <Heading level={3}>БЛЮДЦЕ</Heading>
+      <header className="HomePage__header">
+        <Heading level={3}>БЛЮДЦЕ</Heading>
+      </header>
       <div className="HomePage__content">
         <Paragraph level={1}>Добро пожаловать в Блюдце!</Paragraph>
         <img
@@ -29,15 +22,13 @@ const HomePage: React.FC = () => {
           alt="Блюдце"
         />
         <Paragraph level={1}>
-          Приложение для раздела счета в ресторанах и кафе
+          Приложение для разделения счета в ресторанах и кафе
         </Paragraph>
       </div>
-      <Button
-        className="HomePage__scanBtn"
-        onClick={clickHandler}
-      >
-        Логаут (Пока что)
-      </Button>
+      <div className="HomePage__downSide">
+        <BillInput onSuccess={() => navigate('/approve')} />
+        <Footer />
+      </div>
     </div>
   );
 };
