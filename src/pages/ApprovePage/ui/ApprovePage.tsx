@@ -1,20 +1,41 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import './approve-page.scss';
-import { Navigate } from 'react-router-dom';
-import { Heading } from '../../../shared/Heading';
-import { BackButton } from '../../../shared/BackButton';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { clearBillData } from '../../../redux/store/bill';
 import { Paragraph } from '../../../shared/Paragraph';
+import { BillList } from '../../../widgets/BillList';
+import { Header } from '../../../components/header';
+import { Button } from '../../../shared/Button';
+import { hideLocalLoader, showLocalLoader } from '../../../redux/store/loader';
+import { confirmBill, sendBill } from '../../../redux/store/bill/billThunks';
 
 const ApprovePage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { billsData, isLoading, isFetched } = useAppSelector(
+  const navigate = useNavigate();
+  const { billsData, isLoading, isFetched, receiptId } = useAppSelector(
     (state) => state.billsReducer,
   );
 
+  useEffect(() => {
+    if (isFetched && receiptId) {
+      // eslint-disable-next-line no-alert
+      alert('Заебись');
+    }
+  }, [receiptId]);
+
+  const submitHadler = () => {
+    dispatch(showLocalLoader());
+    dispatch(confirmBill(billsData)).then(() => {
+      dispatch(hideLocalLoader());
+    });
+  };
+
   const finalAmount = useMemo(() => {
-    return billsData.reduce((acc: number, item) => acc + item.price, 0);
+    return billsData.reduce(
+      (acc: number, item) => acc + item.price * item.quantity,
+      0,
+    );
   }, [billsData]);
 
   if (!billsData.length) {
@@ -22,16 +43,28 @@ const ApprovePage: React.FC = () => {
   }
   return (
     <div className="ApprovePage">
-      <header className="ApprovePage__header">
-        <BackButton onClick={() => dispatch(clearBillData())} />
-        <Heading level={3}>БЛЮДЦЕ</Heading>
-      </header>
+      <Header
+        title="БЛЮДЦЕ"
+        subtitle="ЧЕК"
+        onBackButtonClick={() => dispatch(clearBillData())}
+      />
       <div className="ApprovePage__content">
+        <BillList
+          billItems={billsData}
+          isEditable={true}
+          isLiveTime={false}
+        />
         <div className="finalAmount">
-          <Paragraph level={4}>Итого:</Paragraph>
-          <Paragraph level={4}>{finalAmount}р.</Paragraph>
+          <Paragraph level={2}>Итого:</Paragraph>
+          <Paragraph level={2}>{finalAmount}р.</Paragraph>
         </div>
       </div>
+      <Button
+        className="ApprovePage__nextBtn"
+        onClick={submitHadler}
+      >
+        Далее
+      </Button>
     </div>
   );
 };
