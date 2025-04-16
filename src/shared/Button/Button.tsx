@@ -6,7 +6,7 @@ import { Heading } from '../Heading';
 interface ButtonPropsI {
   disabled?: boolean;
   className?: string;
-  onClick: () => void;
+  onClick: (event: unknown) => void;
   custom?: boolean;
   style?: 'primary' | 'secondary';
   children: ReactElement | string;

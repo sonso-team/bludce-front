@@ -5,6 +5,7 @@ import { WelcomePage } from '../../pages/WelcomePage';
 import { AuthPage } from '../../pages/AuthPage';
 import { PrivateRoute } from '../PrivateRoute';
 import { MainLayout } from '../../layouts/MainLayout';
+import ApprovePage from '../../pages/ApprovePage/ui/ApprovePage';
 import HomePage from './../../pages/HomePage/HomePage.tsx';
 
 export const AppRouter: React.FC = () => {
@@ -25,6 +26,10 @@ export const AppRouter: React.FC = () => {
           <Route
             path="/home"
             element={<HomePage />}
+          />
+          <Route
+            path="/approve"
+            element={<ApprovePage />}
           />
         </Route>
       </Route>

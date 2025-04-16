@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Input } from '../../../shared/Input';
 import { Heading } from '../../../shared/Heading';
 import { Button } from '../../../shared/Button';
 import { useConfirmForm } from '../api';
 import { Paragraph } from '../../../shared/Paragraph';
 import { useAppDispatch } from '../../../redux/hooks';
 import { setGoConfirmStep } from '../../../redux/store/auth';
+import { OtpInput } from '../../../components/OtpInput';
 
 export const ConfirmForm: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { isValid, getIsValid, setIsValid, submitHandler, codeRef } =
+  const { isValid, submitHandler, codeRef, setIsValid, getIsValid } =
     useConfirmForm();
 
   useEffect(() => {
@@ -27,18 +27,9 @@ export const ConfirmForm: React.FC = () => {
       </Heading>
       <Heading level={4}>Введите 6-значный код, отправленный на почту</Heading>
       <div className="AuthPage__inputs">
-        <Input
-          placeholder="Код"
-          initialValue=""
-          name="code"
+        <OtpInput
           ref={codeRef}
           onChange={() => setIsValid(getIsValid())}
-          validations={[
-            {
-              name: 'isEmpty',
-              message: 'Введите код',
-            },
-          ]}
         />
       </div>
       <Button

@@ -20,4 +20,25 @@
   &__scanBtn {
     width: 100%;
   }
+
+  &__downSide {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    row-gap: 18px;
+    flex-direction: column;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    .GoBackButton {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
 }
