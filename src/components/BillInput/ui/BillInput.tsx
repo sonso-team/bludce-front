@@ -4,7 +4,6 @@ import './bill-input.scss';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { sendBill } from '../../../redux/store/bill/billThunks';
 import { hideLocalLoader, showLocalLoader } from '../../../redux/store/loader';
-import { clearBillData } from '../../../redux/store/bill';
 
 interface IBillInputProps {
   onSuccess?: () => void;
