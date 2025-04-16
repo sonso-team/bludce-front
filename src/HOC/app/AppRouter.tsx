@@ -7,6 +7,7 @@ import { PrivateRoute } from '../PrivateRoute';
 import { MainLayout } from '../../layouts/MainLayout';
 import ApprovePage from '../../pages/ApprovePage/ui/ApprovePage';
 import AccountPage from '../../pages/AccountPage/ui/AccountPage';
+import HistoryPage from '../../pages/HistoryPage/ui/HistoryPage.tsx';
 import HomePage from './../../pages/HomePage/HomePage.tsx';
 
 export const AppRouter: React.FC = () => {
@@ -35,6 +36,10 @@ export const AppRouter: React.FC = () => {
         <Route
           path="/account"
           element={<AccountPage />}
+        />
+        <Route
+          path="/history"
+          element={<HistoryPage />}
         />
       </Route>
       {/* </Route> */}

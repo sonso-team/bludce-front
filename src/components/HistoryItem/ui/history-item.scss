@@ -1,6 +1,18 @@
 .HistoryItem {
-  width: 100%;
+  width: 440px;
+  padding: 25px;
   border: 1px solid var(--light-gray);
   display: flex;
   column-gap: 30px;
+  &__Heading {
+    font-size: 24px;
+    font-weight: var(--default-weight);
+    margin: auto 0;
+  }
+  .date {
+    max-width: 52px;
+    max-height: 62px;
+    line-height: 30px;
+    text-align: left;
+  }
 }
