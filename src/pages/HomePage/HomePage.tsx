@@ -5,15 +5,14 @@ import { Heading } from '../../shared/Heading';
 import { Paragraph } from '../../shared/Paragraph';
 import { Footer } from '../../widgets/Footer';
 import { BillInput } from '../../components/BillInput';
+import { Header } from '../../components/header';
 import bludce from './../../assets/images/bludce-full.png';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
   return (
     <div className="HomePage">
-      <header className="HomePage__header">
-        <Heading level={3}>БЛЮДЦЕ</Heading>
-      </header>
+      <Header title="БЛЮДЦЕ" />
       <div className="HomePage__content">
         <Paragraph level={1}>Добро пожаловать в Блюдце!</Paragraph>
         <img

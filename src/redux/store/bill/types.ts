@@ -3,6 +3,7 @@ export interface IBillError {
 }
 
 export interface IBillState {
+  receiptId: string | null;
   isFetched: boolean;
   isLoading: boolean;
   billsData: BillItem[];
@@ -17,4 +18,7 @@ export type BillItem = {
   price: number;
 };
 
-export type IBillResponse = BillItem[];
+export interface IBillResponse {
+  receiptId: string;
+}
+export type SendBillResponse = BillItem[];
