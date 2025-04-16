@@ -10,7 +10,7 @@ export const mapBillsToHistory = (bills: Bill[]): HistoryItem[] => {
   return bills.map((bill) => ({
     id: bill.receiptId,
     date: bill.createdAt,
-    billNumber: 0, // пока заглушка
+    billNumber: bills.indexOf(bill) + 1,
     link: '', // тоже заглушка
   }));
 };
