@@ -6,14 +6,14 @@ import './header.scss';
 interface IHeaderProps {
   title: string;
   subtitle?: string;
-  withBackButton: boolean;
+  withBackButton?: boolean;
   onBackButtonClick?: () => unknown;
 }
 
 export const Header: React.FC<IHeaderProps> = ({
   title,
   subtitle,
-  withBackButton,
+  withBackButton = false,
   onBackButtonClick,
 }) => {
   return (
