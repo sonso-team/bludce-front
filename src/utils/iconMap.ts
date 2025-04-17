@@ -6,6 +6,7 @@ import backSvg from './../assets/icons/back.svg';
 import pencilSvg from './../assets/icons/pencil.svg';
 import crossSvg from './../assets/icons/cross.svg';
 import checkSvg from './../assets/icons/check.svg';
+import selectSvg from './../assets/icons/select.svg';
 
 export const iconMap = {
   success: successSvg,
@@ -16,4 +17,5 @@ export const iconMap = {
   back: backSvg,
   pencil: pencilSvg,
   cross: crossSvg,
+  select: selectSvg,
 };
