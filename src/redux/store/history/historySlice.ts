@@ -28,9 +28,9 @@ const historySlice = createSlice({
       .addCase(
         getHistory.fulfilled,
         (state, action: PayloadAction<IHistoryResponse>) => {
+          state.isLoading = false;
           state.historyData = mapBillsToHistory(action.payload);
           state.isFetched = true;
-          state.isLoading = false;
         },
       )
       .addCase(getHistory.rejected, (state, action) => {

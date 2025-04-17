@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { IAuthState, IAuthResponse } from './types.ts';
+import type { IAuthState, IAuthResponse, IWhoAmIResponse } from './types.ts';
 import {
   login,
   logout,
@@ -117,9 +117,16 @@ const authSlice = createSlice({
         state.isLoading = true;
         state.message = null;
       })
-      .addCase(getUser.fulfilled, (state) => {
-        state.isLoading = false;
-      })
+      .addCase(
+        getUser.fulfilled,
+        (state, action: PayloadAction<IWhoAmIResponse>) => {
+          state.isLoading = false;
+          state.user.name = action.payload.name;
+          state.user.phoneNumber = action.payload.phoneNumber;
+          state.user.id = action.payload.id;
+          state.user.email = action.payload.email;
+        },
+      )
       .addCase(getUser.rejected, (state, action) => {
         state.isLoading = false;
         state.message = action.payload.message;

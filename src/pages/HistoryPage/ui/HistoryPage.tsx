@@ -27,7 +27,7 @@ const HistoryPage: React.FC = () => {
         </Heading>
       </header>
       <div className="HistoryPage__HistoryItemsWrapper">
-        {historyData ? (
+        {historyData.length !== 0 ? (
           historyData.map((item) => (
             <HistoryItem
               key={item.id}

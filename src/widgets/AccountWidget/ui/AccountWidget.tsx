@@ -16,7 +16,9 @@ export const AccountWidget: React.FC = () => {
         className="AccountWidget__name"
         level={3}
       >
-        {accountWidget.user.name ? accountWidget.user.name : 'Безымянный'}
+        {accountWidget.authState.user.name
+          ? accountWidget.authState.user.name
+          : 'Безымянный'}
       </Heading>
       <div className="AccountWidget__element">
         <Paragraph
@@ -29,8 +31,8 @@ export const AccountWidget: React.FC = () => {
           className="AccountWidget__element__value"
           level={1}
         >
-          {accountWidget.user.phoneNumber
-            ? maskPhoneNumber(accountWidget.user.phoneNumber)
+          {accountWidget.authState.user.phoneNumber
+            ? maskPhoneNumber(accountWidget.authState.user.phoneNumber)
             : 'Не указан'}
         </Paragraph>
       </div>
@@ -45,7 +47,9 @@ export const AccountWidget: React.FC = () => {
           className="AccountWidget__element__value"
           level={1}
         >
-          {accountWidget.user.email ? accountWidget.user.email : 'Не указан'}
+          {accountWidget.authState.user.email
+            ? accountWidget.authState.user.email
+            : 'Не указан'}
         </Paragraph>
       </div>
     </div>
