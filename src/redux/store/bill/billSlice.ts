@@ -6,7 +6,7 @@ import type {
   BillItem,
   IBillResponse,
 } from './types.ts';
-import { confirmBill, sendBill } from './billThunks.ts';
+import { configBill, confirmBill, sendBill } from './billThunks.ts';
 
 const initialState: IBillState = {
   receiptId: null,
@@ -14,6 +14,7 @@ const initialState: IBillState = {
   billsData: [],
   isFetched: false,
   message: null,
+  isConfigured: false,
 };
 
 const billSlice = createSlice({
@@ -22,6 +23,9 @@ const billSlice = createSlice({
   reducers: {
     clearBillData(state) {
       state.billsData = [];
+    },
+    clearReceiptData(state) {
+      state.receiptId = null;
     },
     updateBillData(
       state,
@@ -73,10 +77,31 @@ const billSlice = createSlice({
         state.message = action.payload.message;
         state.isLoading = false;
         state.isFetched = false;
+      })
+      .addCase(configBill.pending, (state) => {
+        state.isLoading = true;
+        state.isFetched = false;
+        state.message = null;
+        state.isConfigured = false;
+      })
+      .addCase(configBill.fulfilled, (state) => {
+        state.isFetched = true;
+        state.isConfigured = true;
+        state.isLoading = false;
+      })
+      .addCase(configBill.rejected, (state, action) => {
+        state.message = action.payload.message;
+        state.isConfigured = false;
+        state.isFetched = false;
+        state.isLoading = false;
       });
   },
 });
 
-export const { clearBillData, removeBillItem, updateBillData } =
-  billSlice.actions;
+export const {
+  clearBillData,
+  clearReceiptData,
+  removeBillItem,
+  updateBillData,
+} = billSlice.actions;
 export default billSlice.reducer;

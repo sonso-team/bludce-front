@@ -19,8 +19,7 @@ const ApprovePage: React.FC = () => {
 
   useEffect(() => {
     if (isFetched && receiptId) {
-      // eslint-disable-next-line no-alert
-      alert('Заебись');
+      navigate('/config');
     }
   }, [receiptId]);
 
@@ -46,6 +45,7 @@ const ApprovePage: React.FC = () => {
       <Header
         title="БЛЮДЦЕ"
         subtitle="ЧЕК"
+        withBackButton={true}
         onBackButtonClick={() => dispatch(clearBillData())}
       />
       <div className="ApprovePage__content">
