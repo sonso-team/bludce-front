@@ -30,14 +30,12 @@ export const Selector = forwardRef<SelectorRef, SelectorProps>(
     const internalRef = useRef<HTMLInputElement>(null);
 
     useImperativeHandle(ref, () => {
-      console.log(1111);
       return {
         value: selected?.key || '',
       };
     }, [selected]);
 
     const handleSelect = (option: Option) => {
-      console.log(222222222222);
       setSelected(option);
       setIsOpen(false);
       setTimeout(() => onChange?.(), 0);

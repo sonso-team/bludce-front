@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import './lobby-page.scss';
 import { Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
@@ -10,8 +10,9 @@ import { Heading } from '../../../shared/Heading';
 
 export const LobbyPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { billsData, isConfigured, isLoading, isFetched, receiptId } =
-    useAppSelector((state) => state.billsReducer);
+  const { billsData, isConfigured } = useAppSelector(
+    (state) => state.billsReducer,
+  );
 
   const finalAmount = useMemo(() => {
     return billsData.reduce(
