@@ -5,9 +5,11 @@ import { Paragraph } from '../../../shared/Paragraph';
 import './account-page.scss';
 import { AccountWidget } from '../../../widgets/AccountWidget';
 import { Button } from '../../../shared/Button';
+import { useAppDispatch } from '../../../redux/hooks';
+import { logout } from '../../../redux/store/auth/authThunks';
 
 const AccountPage: React.FC = () => {
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   // const { billsData, isLoading, isFetched } = useAppSelector(
   //   (state) => state.billsReducer,
   // );
@@ -34,7 +36,9 @@ const AccountPage: React.FC = () => {
       <AccountWidget />
       <Button
         className="AccountPage__button"
-        onClick={() => {}}
+        onClick={() => {
+          dispatch(logout());
+        }}
       >
         Выйти из аккаунта
       </Button>

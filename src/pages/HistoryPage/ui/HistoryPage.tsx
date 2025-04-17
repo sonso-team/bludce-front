@@ -11,8 +11,9 @@ const HistoryPage: React.FC = () => {
   const { historyData } = useAppSelector((state) => state.historyReducer);
   useEffect(() => {
     dispatch(getHistory());
-  }, []);
-
+  }, [dispatch]);
+  //     ^
+  //     |        вот этот ебан виноват если все сломалось
   //Я ЕБЛАН, НАЧАЛ ДЕЛАТЬ СТРАНИЦУ АККАУНТА А ПОТОМ ЗАБЫЛ И НАЧАЛ ХУЯЧИТЬ СТРАНИЦУ ИСТОРИИ
   return (
     <div className="HistoryPage">

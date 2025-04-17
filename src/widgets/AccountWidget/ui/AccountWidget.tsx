@@ -1,14 +1,13 @@
 import React from 'react';
 import './account-widget.scss';
-import { Link } from 'react-router-dom';
-import { Input } from '../../../shared/Input';
 import { Heading } from '../../../shared/Heading';
-import { Button } from '../../../shared/Button';
 
 import { Paragraph } from '../../../shared/Paragraph';
 import { maskPhoneNumber } from '../../../utils/format';
+import { useAccountWidget } from '../api';
 
 export const AccountWidget: React.FC = () => {
+  const accountWidget = useAccountWidget();
   //   const { isValid, getIsValid, setIsValid, submitHandler, loginRef } =
   //     useLoginForm();
   return (
@@ -17,7 +16,7 @@ export const AccountWidget: React.FC = () => {
         className="AccountWidget__name"
         level={3}
       >
-        Иван
+        {accountWidget.user.name ? accountWidget.user.name : 'Безымянный'}
       </Heading>
       <div className="AccountWidget__element">
         <Paragraph
@@ -30,7 +29,9 @@ export const AccountWidget: React.FC = () => {
           className="AccountWidget__element__value"
           level={1}
         >
-          88005553535
+          {accountWidget.user.phoneNumber
+            ? maskPhoneNumber(accountWidget.user.phoneNumber)
+            : 'Не указан'}
         </Paragraph>
       </div>
       <div className="AccountWidget__element">
@@ -44,7 +45,7 @@ export const AccountWidget: React.FC = () => {
           className="AccountWidget__element__value"
           level={1}
         >
-          ivanzapara04@mail.ru
+          {accountWidget.user.email ? accountWidget.user.email : 'Не указан'}
         </Paragraph>
       </div>
     </div>

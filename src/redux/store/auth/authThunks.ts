@@ -6,9 +6,15 @@ import {
   AUTH_REFRESH,
   AUTH_REG,
   AUTH_SEND_CODE,
+  AUTH_WHO_AM_I,
 } from '../../../constants/endpoints/endpointConst.ts';
 import api from '../../../services/axios/api.ts';
-import type { IAuthData, IAuthError, IAuthResponse } from './types.ts';
+import type {
+  IAuthData,
+  IAuthError,
+  IAuthResponse,
+  IWhoAmIResponse,
+} from './types.ts';
 
 const login = createAsyncThunk<
   IAuthResponse,
@@ -96,4 +102,19 @@ const sendCode = createAsyncThunk<
   }
 });
 
-export { login, registration, logout, refresh, sendCode };
+const getUser = createAsyncThunk<
+  IWhoAmIResponse,
+  void,
+  { rejectValue: IAuthError }
+>('auth/who-am-i', async (_, { rejectWithValue }) => {
+  try {
+    const response: AxiosResponse = await api.get(AUTH_WHO_AM_I);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue({
+      message: error?.response?.data?.message || error.message,
+    });
+  }
+});
+
+export { login, registration, logout, refresh, sendCode, getUser };

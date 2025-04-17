@@ -7,6 +7,7 @@ import {
   refresh,
   registration,
   sendCode,
+  getUser,
 } from './authThunks.ts';
 
 const initialState: IAuthState = {
@@ -22,7 +23,12 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setLogin(state, action: PayloadAction<{ login: string }>) {
-      state.user = { phoneNumber: action.payload.login, id: null, email: null };
+      state.user = {
+        phoneNumber: action.payload.login,
+        id: null,
+        email: null,
+        name: null,
+      };
     },
     setGoConfirmStep(state, action: PayloadAction<boolean>) {
       state.goConfirmStep = action.payload;
@@ -104,6 +110,17 @@ const authSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(sendCode.rejected, (state, action) => {
+        state.isLoading = false;
+        state.message = action.payload.message;
+      })
+      .addCase(getUser.pending, (state) => {
+        state.isLoading = true;
+        state.message = null;
+      })
+      .addCase(getUser.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(getUser.rejected, (state, action) => {
         state.isLoading = false;
         state.message = action.payload.message;
       });
