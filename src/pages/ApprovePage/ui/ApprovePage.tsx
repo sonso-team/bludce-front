@@ -8,12 +8,12 @@ import { BillList } from '../../../widgets/BillList';
 import { Header } from '../../../components/header';
 import { Button } from '../../../shared/Button';
 import { hideLocalLoader, showLocalLoader } from '../../../redux/store/loader';
-import { confirmBill, sendBill } from '../../../redux/store/bill/billThunks';
+import { confirmBill } from '../../../redux/store/bill/billThunks';
 
 const ApprovePage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { billsData, isLoading, isFetched, receiptId } = useAppSelector(
+  const { billsData, isFetched, receiptId } = useAppSelector(
     (state) => state.billsReducer,
   );
 
