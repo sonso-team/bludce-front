@@ -3,6 +3,7 @@ export interface IBillError {
 }
 
 export interface IBillState {
+  isError: boolean;
   receiptId: string | null;
   isFetched: boolean;
   isLoading: boolean;

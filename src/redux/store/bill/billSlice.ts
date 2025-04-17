@@ -10,6 +10,7 @@ import { configBill, confirmBill, sendBill } from './billThunks.ts';
 
 const initialState: IBillState = {
   receiptId: null,
+  isError: false,
   isLoading: false,
   billsData: [],
   isFetched: false,
@@ -44,6 +45,7 @@ const billSlice = createSlice({
       .addCase(sendBill.pending, (state) => {
         state.isLoading = true;
         state.isFetched = false;
+        state.isError = false;
         state.message = null;
       })
       .addCase(
@@ -51,16 +53,19 @@ const billSlice = createSlice({
         (state, action: PayloadAction<SendBillResponse>) => {
           state.billsData = action.payload;
           state.isFetched = true;
+          state.isError = false;
           state.isLoading = false;
         },
       )
       .addCase(sendBill.rejected, (state, action) => {
         state.message = action.payload.message;
+        state.isError = true;
         state.isLoading = false;
         state.isFetched = false;
       })
       .addCase(confirmBill.pending, (state) => {
         state.receiptId = null;
+        state.isError = false;
         state.isLoading = true;
         state.isFetched = false;
         state.message = null;
@@ -69,6 +74,7 @@ const billSlice = createSlice({
         confirmBill.fulfilled,
         (state, action: PayloadAction<IBillResponse>) => {
           state.receiptId = action.payload.receiptId;
+          state.isError = false;
           state.isFetched = true;
           state.isLoading = false;
         },
@@ -76,21 +82,25 @@ const billSlice = createSlice({
       .addCase(confirmBill.rejected, (state, action) => {
         state.message = action.payload.message;
         state.isLoading = false;
+        state.isError = true;
         state.isFetched = false;
       })
       .addCase(configBill.pending, (state) => {
         state.isLoading = true;
+        state.isError = false;
         state.isFetched = false;
         state.message = null;
         state.isConfigured = false;
       })
       .addCase(configBill.fulfilled, (state) => {
         state.isFetched = true;
+        state.isError = false;
         state.isConfigured = true;
         state.isLoading = false;
       })
       .addCase(configBill.rejected, (state, action) => {
         state.message = action.payload.message;
+        state.isError = true;
         state.isConfigured = false;
         state.isFetched = false;
         state.isLoading = false;
