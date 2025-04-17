@@ -1,10 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { iconMap } from '../../../utils/iconMap';
 import { Paragraph } from '../../../shared/Paragraph';
 import './footer.scss';
 import { logout } from '../../../redux/store/auth/authThunks';
 import { useAppDispatch } from '../../../redux/hooks';
-import { useNavigate } from 'react-router-dom';
 import { getHistory } from '../../../redux/store/history/historyThunks';
 
 export const Footer: React.FC = () => {

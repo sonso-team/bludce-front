@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { HistoryItem, IHistoryResponse, IHistoryState } from './types.ts';
+import type { IHistoryResponse, IHistoryState } from './types.ts';
 import { getHistory, mapBillsToHistory } from './historyThunks.ts';
 
 const initialState: IHistoryState = {
@@ -17,9 +17,6 @@ const historySlice = createSlice({
     clearHistoryData(state) {
       state.historyData = null;
     },
-    // addBillToHistory(state, action: PayloadAction<{ id: string, bill: HistoryItem }>) {
-    //   state.historyData.set(action.payload.id, action.payload.bill);
-    // },
   },
   extraReducers: (builder) => {
     builder
@@ -31,7 +28,6 @@ const historySlice = createSlice({
       .addCase(
         getHistory.fulfilled,
         (state, action: PayloadAction<IHistoryResponse>) => {
-          console.log(action.payload);
           state.historyData = mapBillsToHistory(action.payload);
           state.isFetched = true;
           state.isLoading = false;
