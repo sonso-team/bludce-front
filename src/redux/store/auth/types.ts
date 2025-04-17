@@ -22,6 +22,7 @@ export interface IAuthError {
 }
 
 export interface IAuthState {
+  isError: boolean;
   isLoading: boolean;
   isAuth: boolean;
   user: IUser | null;
