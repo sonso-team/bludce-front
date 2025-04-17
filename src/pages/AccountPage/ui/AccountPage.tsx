@@ -3,6 +3,8 @@ import { BackButton } from '../../../shared/BackButton';
 import { Heading } from '../../../shared/Heading';
 import { Paragraph } from '../../../shared/Paragraph';
 import './account-page.scss';
+import { AccountWidget } from '../../../widgets/AccountWidget';
+import { Button } from '../../../shared/Button';
 
 const AccountPage: React.FC = () => {
   // const dispatch = useAppDispatch();
@@ -29,12 +31,13 @@ const AccountPage: React.FC = () => {
           БЛЮДЦЕ
         </Heading>
       </header>
-      {/* <div className="ApprovePage__content">
-          <div className="finalAmount">
-            <Paragraph level={4}>Итого:</Paragraph>
-            <Paragraph level={4}>{finalAmount}р.</Paragraph>
-          </div>
-        </div> */}
+      <AccountWidget />
+      <Button
+        className="AccountPage__button"
+        onClick={() => {}}
+      >
+        Выйти из аккаунта
+      </Button>
     </div>
   );
 };

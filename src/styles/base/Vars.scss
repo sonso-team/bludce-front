@@ -27,6 +27,8 @@ $breakpoint-5: 450px;
   --default-bg-color: var(--black);
   --disabled-bg: #c6c6c6;
 
+  --red-button: #b50000;
+
   --primary-color: #5936db;
 
   // Input
@@ -39,6 +41,7 @@ $breakpoint-5: 450px;
   --input-error-shadow: rgb(188, 34, 34);
 
   // Font-Weight
+  --extra-thin-weight: 300;
   --thin-weight: 400;
   --default-weight: 500;
 }
