@@ -1,0 +1,23 @@
+.AccountPage {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+
+  max-width: 350px;
+  width: 100%;
+  margin: 0 auto;
+  padding-bottom: 36px;
+
+  &__button {
+    background-color: var(--red-button);
+    width: 100%;
+  }
+
+  a.AccountPage__link {
+    text-decoration: underline;
+    color: var(--orange);
+  }
+}

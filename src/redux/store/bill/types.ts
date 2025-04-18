@@ -1,3 +1,5 @@
+import type { IUser } from '../auth/types';
+
 export interface IBillError {
   message: string;
 }
@@ -20,8 +22,21 @@ export type BillItem = {
   price: number;
 };
 
-export interface IBillResponse {
-  receiptId?: string;
+// все что приходит по чеку
+export interface Bill {
+  receiptId: string;
+  receiptType: string;
+  tipsType: string;
+  tipsPercent: number;
+  personCount: number;
+  createdAt: string;
+  updatedAt: string;
+  initiator: IUser;
+  positions: BillItem[];
+}
+
+export interface ConfirmBillResponse {
+  receiptId: string;
 }
 
 export interface IBillConfig {

@@ -2,12 +2,15 @@ export interface IUser {
   id: string;
   phoneNumber: string;
   email: string;
+  name?: string;
 }
 export interface IAuthResponse {
   user: IUser;
   token: string;
   message?: string;
 }
+
+export type IWhoAmIResponse = IUser;
 
 export interface IAuthData {
   login?: string;

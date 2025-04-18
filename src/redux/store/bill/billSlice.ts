@@ -4,7 +4,7 @@ import type {
   IBillState,
   SendBillResponse,
   BillItem,
-  IBillResponse,
+  ConfirmBillResponse,
 } from './types.ts';
 import { configBill, confirmBill, sendBill } from './billThunks.ts';
 
@@ -72,7 +72,7 @@ const billSlice = createSlice({
       })
       .addCase(
         confirmBill.fulfilled,
-        (state, action: PayloadAction<IBillResponse>) => {
+        (state, action: PayloadAction<ConfirmBillResponse>) => {
           state.receiptId = action.payload.receiptId;
           state.isError = false;
           state.isFetched = true;
