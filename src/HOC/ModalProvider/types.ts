@@ -18,7 +18,7 @@ export interface ModalConfigI {
   primaryHandler?: () => void;
   secondaryHandler?: () => void;
   closeOutside?: boolean;
-  overrideContent?: ReactElement;
+  overrideContent?: ReactElement<OverrideContentPropsI>;
 }
 
 export interface ModalProviderContextI {
