@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Heading } from '../../../shared/Heading';
 import './history-page.scss';
-import { HistoryItem } from '../../../components/HistoryItem';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { getHistory } from '../../../redux/store/history/historyThunks';
 import { Header } from '../../../components/header';
+import { HistoryItem } from '../../../components/HistoryItem';
 
 const HistoryPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -18,7 +18,7 @@ const HistoryPage: React.FC = () => {
     <div className="HistoryPage">
       <Header
         title={'БЛЮДЦЕ'}
-        onBackButtonClick={() => {}}
+        withBackButton
       />
       <div className="HistoryPage__HistoryItemsWrapper">
         {historyData.length !== 0 ? (

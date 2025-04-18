@@ -52,7 +52,6 @@ const ApprovePage: React.FC = () => {
         <BillList
           billItems={billsData}
           isEditable={true}
-          isLiveTime={false}
         />
         <div className="finalAmount">
           <Paragraph level={2}>Итого:</Paragraph>
