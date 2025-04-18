@@ -65,7 +65,7 @@ export const BillRow: React.FC<IBillRowProps> = memo(
         {isEditing ? (
           <input
             type="text"
-            className="BillList__input"
+            className="BillList__input BillList__column"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -75,7 +75,7 @@ export const BillRow: React.FC<IBillRowProps> = memo(
         {isEditing ? (
           <input
             type="text"
-            className="BillList__input"
+            className="BillList__input BillList__column"
             value={quantity}
             onChange={(e) => setQuantity(Number(e.target.value))}
           />

@@ -5,9 +5,11 @@ import { WelcomePage } from '../../pages/WelcomePage';
 import { AuthPage } from '../../pages/AuthPage';
 import { PrivateRoute } from '../PrivateRoute';
 import { MainLayout } from '../../layouts/MainLayout';
+import ConfigPage from '../../pages/ConfigPage/ui/ConfigPage';
 import ApprovePage from '../../pages/ApprovePage/ui/ApprovePage';
 import AccountPage from '../../pages/AccountPage/ui/AccountPage';
 import HistoryPage from '../../pages/HistoryPage/ui/HistoryPage.tsx';
+import { LobbyPage } from '../../pages/LobbyPage';
 import HomePage from './../../pages/HomePage/HomePage.tsx';
 
 export const AppRouter: React.FC = () => {
@@ -40,6 +42,14 @@ export const AppRouter: React.FC = () => {
           <Route
             path="/history"
             element={<HistoryPage />}
+          />
+          <Route
+            path="/config"
+            element={<ConfigPage />}
+          />
+          <Route
+            path="/lobby"
+            element={<LobbyPage />}
           />
         </Route>
       </Route>

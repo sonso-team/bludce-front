@@ -9,6 +9,7 @@ import type {
   BillData,
   BillItem,
   ConfirmBillResponse,
+  IBillConfig,
   IBillError,
   SendBillResponse,
 } from './types';
@@ -54,4 +55,22 @@ const confirmBill = createAsyncThunk<
   }
 });
 
-export { sendBill, confirmBill };
+const configBill = createAsyncThunk<
+  IBillResponse,
+  IBillConfig,
+  { rejectValue: IBillError }
+>('bill/config', async (billData, { rejectWithValue }) => {
+  try {
+    const response: AxiosResponse<IBillResponse> = await api.put(
+      BILL_SEND,
+      billData,
+    );
+    return response.data;
+  } catch (error) {
+    return rejectWithValue({
+      message: error?.response?.data?.message || error.message,
+    });
+  }
+});
+
+export { sendBill, confirmBill, configBill };
