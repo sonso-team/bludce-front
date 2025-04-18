@@ -8,8 +8,6 @@ import { useAccountWidget } from '../api';
 
 export const AccountWidget: React.FC = () => {
   const accountWidget = useAccountWidget();
-  //   const { isValid, getIsValid, setIsValid, submitHandler, loginRef } =
-  //     useLoginForm();
   return (
     <div className="AccountWidget">
       <Heading

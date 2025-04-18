@@ -6,20 +6,16 @@ import { AccountWidget } from '../../../widgets/AccountWidget';
 import { Button } from '../../../shared/Button';
 import { useAppDispatch } from '../../../redux/hooks';
 import { logout } from '../../../redux/store/auth/authThunks';
+import { Header } from '../../../components/header';
 
 const AccountPage: React.FC = () => {
   const dispatch = useAppDispatch();
   return (
     <div className="AccountPage">
-      <header className="AccountPage__header">
-        <BackButton />
-        <Heading
-          className="AccountPage__header__title"
-          level={3}
-        >
-          БЛЮДЦЕ
-        </Heading>
-      </header>
+      <Header
+        title={'БЛЮДЦЕ'}
+        onBackButtonClick={() => {}}
+      />
       <AccountWidget />
       <Button
         className="AccountPage__button"

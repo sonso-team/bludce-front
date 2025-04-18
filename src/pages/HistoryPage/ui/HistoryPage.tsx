@@ -5,6 +5,7 @@ import './history-page.scss';
 import { HistoryItem } from '../../../components/HistoryItem';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { getHistory } from '../../../redux/store/history/historyThunks';
+import { Header } from '../../../components/header';
 
 const HistoryPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -17,15 +18,10 @@ const HistoryPage: React.FC = () => {
   //Я ЕБЛАН, НАЧАЛ ДЕЛАТЬ СТРАНИЦУ АККАУНТА А ПОТОМ ЗАБЫЛ И НАЧАЛ ХУЯЧИТЬ СТРАНИЦУ ИСТОРИИ
   return (
     <div className="HistoryPage">
-      <header className="HistoryPage__header">
-        <BackButton />
-        <Heading
-          className="HistoryPage__header__title"
-          level={3}
-        >
-          БЛЮДЦЕ
-        </Heading>
-      </header>
+      <Header
+        title={'БЛЮДЦЕ'}
+        onBackButtonClick={() => {}}
+      />
       <div className="HistoryPage__HistoryItemsWrapper">
         {historyData.length !== 0 ? (
           historyData.map((item) => (
@@ -37,7 +33,7 @@ const HistoryPage: React.FC = () => {
             />
           ))
         ) : (
-          <Heading level={3}>Упс! Тут пока пустовато!</Heading>
+          <Heading level={3}>Упс! Здесь пока пустовато!</Heading>
         )}
       </div>
     </div>

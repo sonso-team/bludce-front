@@ -9,21 +9,4 @@
   max-width: 350px;
   width: 100%;
   margin: 0 auto;
-
-  &__header {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    width: 100%;
-    margin-top: 20px;
-    .GoBackButton {
-      position: absolute;
-      left: -15%;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    &__title {
-      font-family: var(--secondary-ff), sans-serif;
-    }
-  }
 }
