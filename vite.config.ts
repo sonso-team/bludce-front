@@ -12,8 +12,8 @@ export default defineConfig({
       name: 'Блюдце',
       short_name: 'Блюдце',
       description: 'Приложение, которое можно установить на телефон!',
-      theme_color: '#ffffff',
-      background_color: '#ffffff',
+      theme_color: '#000000',
+      background_color: '#000000',
       display: 'standalone',
       start_url: '/',
       icons: [

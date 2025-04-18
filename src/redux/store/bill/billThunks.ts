@@ -8,6 +8,7 @@ import api from '../../../services/axios/api.ts';
 import type {
   BillData,
   BillItem,
+  IBillConfig,
   ConfirmBillResponse,
   IBillError,
   SendBillResponse,
@@ -54,4 +55,22 @@ const confirmBill = createAsyncThunk<
   }
 });
 
-export { sendBill, confirmBill };
+const configBill = createAsyncThunk<
+  ConfirmBillResponse,
+  IBillConfig,
+  { rejectValue: IBillError }
+>('bill/config', async (billData, { rejectWithValue }) => {
+  try {
+    const response: AxiosResponse<ConfirmBillResponse> = await api.put(
+      BILL_SEND,
+      billData,
+    );
+    return response.data;
+  } catch (error) {
+    return rejectWithValue({
+      message: error?.response?.data?.message || error.message,
+    });
+  }
+});
+
+export { sendBill, confirmBill, configBill };

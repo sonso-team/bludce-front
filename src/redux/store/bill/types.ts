@@ -5,11 +5,13 @@ export interface IBillError {
 }
 
 export interface IBillState {
+  isError: boolean;
   receiptId: string | null;
   isFetched: boolean;
   isLoading: boolean;
   billsData: BillItem[];
   message: null | string;
+  isConfigured: boolean;
 }
 
 export type BillData = FormData;
@@ -35,6 +37,15 @@ export interface Bill {
 
 export interface ConfirmBillResponse {
   receiptId: string;
+}
+
+export interface IBillConfig {
+  receiptId: string;
+  receiptType: string;
+  tipsType: string;
+  tipsPercent?: number;
+  tipsValue?: number;
+  personCount?: number;
 }
 
 export type SendBillResponse = BillItem[];
