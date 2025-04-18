@@ -1,18 +1,26 @@
 import type React from 'react';
 import type { BillItem } from '../../../redux/store/bill/types';
 import { Paragraph } from '../../../shared/Paragraph';
-import { iconMap } from '../../../utils/iconMap';
 import './bill-list.scss';
+import type { IBillStateItem } from '../../../redux/store/lobby/types';
 import { BillRow } from './BillRow';
 
 interface IBillListProps {
-  billItems: BillItem[];
+  billItems: IBillStateItem[];
   isEditable?: boolean;
   isLiveTime?: boolean;
+  onPick?: (item: IBillStateItem, index: number) => void;
+  myId?: string;
 }
 
 export const BillList: React.FC<IBillListProps> = ({ ...props }) => {
-  const { billItems = [], isEditable = true, isLiveTime = false } = props;
+  const {
+    billItems = [],
+    isEditable = false,
+    isLiveTime = false,
+    onPick,
+    myId,
+  } = props;
 
   return (
     <section className="BillList">
@@ -38,12 +46,37 @@ export const BillList: React.FC<IBillListProps> = ({ ...props }) => {
       </div>
       <div className="BillList__data">
         {billItems.map((item, index) => {
+          if (!isLiveTime) {
+            return (
+              <BillRow
+                item={item}
+                isEditable={isEditable}
+                key={`${item.name}${item.quantity}`}
+                index={index}
+              />
+            );
+          }
+          let mode;
+          if (item.userId) {
+            if (item.paidBy) {
+              mode = 'green';
+            }
+            if (item.userId !== myId) {
+              mode = 'yellow';
+            } else {
+              mode = 'blue';
+            }
+          } else {
+            mode = 'default';
+          }
           return (
             <BillRow
               item={item}
               isEditable={isEditable}
               key={`${item.name}${item.quantity}`}
               index={index}
+              mode={mode}
+              onClick={() => onPick(item, index)}
             />
           );
         })}

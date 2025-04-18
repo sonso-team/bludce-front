@@ -19,7 +19,7 @@ const initialState: IBillState = {
 };
 
 const billSlice = createSlice({
-  name: 'auth',
+  name: 'bill',
   initialState,
   reducers: {
     clearBillData(state) {
@@ -38,6 +38,9 @@ const billSlice = createSlice({
       const result = Array.from(state.billsData);
       result.splice(action.payload, 1);
       state.billsData = result;
+    },
+    unsetIsConfigured(state) {
+      state.isConfigured = false;
     },
   },
   extraReducers: (builder) => {
@@ -112,6 +115,7 @@ export const {
   clearBillData,
   clearReceiptData,
   removeBillItem,
+  unsetIsConfigured,
   updateBillData,
 } = billSlice.actions;
 export default billSlice.reducer;

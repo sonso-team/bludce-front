@@ -25,6 +25,12 @@ export const AppRouter: React.FC = () => {
           element={<AuthPage />}
         />
       </Route>
+      <Route element={<MainLayout />}>
+        <Route
+          path="/lobby/*"
+          element={<LobbyPage />}
+        />
+      </Route>
       <Route element={<PrivateRoute />}>
         <Route element={<MainLayout />}>
           <Route
@@ -46,10 +52,6 @@ export const AppRouter: React.FC = () => {
           <Route
             path="/config"
             element={<ConfigPage />}
-          />
-          <Route
-            path="/lobby"
-            element={<LobbyPage />}
           />
         </Route>
       </Route>

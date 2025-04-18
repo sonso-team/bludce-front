@@ -20,6 +20,7 @@ import { Input } from '../../../shared/Input';
 import { hideLocalLoader, showLocalLoader } from '../../../redux/store/loader';
 import { configBill } from '../../../redux/store/bill/billThunks';
 import type { IBillConfig } from '../../../redux/store/bill/types';
+import { setIsIniciator } from '../../../redux/store/lobby';
 
 export const ConfigPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -59,6 +60,7 @@ export const ConfigPage: React.FC = () => {
 
   useEffect(() => {
     if (isFetched && isConfigured) {
+      dispatch(setIsIniciator());
       navigate('/lobby');
     }
   }, [isConfigured]);
@@ -70,11 +72,11 @@ export const ConfigPage: React.FC = () => {
       receiptType,
       tipsType,
     };
-    if (receiptType === receiptTypes.EVENLY) {
-      result['personCount'] = Number(quantityRef.current?.value);
-    }
+
+    result['personCount'] = Number(quantityRef.current?.value);
+
     if (tipsType === receiptTypes.EVENLY) {
-      result['tipsPercent'] = Number(amountRef.current?.value);
+      result['tipsValue'] = Number(amountRef.current?.value);
     }
     dispatch(configBill(result)).then(() => {
       dispatch(hideLocalLoader());
@@ -113,7 +115,7 @@ export const ConfigPage: React.FC = () => {
           ]}
           onChange={() => setIsValid(getIsValid())}
         />
-        {receiptType === receiptTypes.EVENLY && (
+        {receiptRef.current?.value && (
           <Input
             className="ConfigPage__input"
             placeholder="Кол-во персон"

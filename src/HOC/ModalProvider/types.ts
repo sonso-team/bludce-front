@@ -1,11 +1,13 @@
 import type { ReactNode, ReactElement } from 'react';
+import React from 'react';
 
 export interface ModalProviderPropsI {
   children: ReactNode;
 }
 
-interface OverrideContentPropsI {
-  closeHandler: () => void;
+export interface OverrideContentPropsI {
+  closeHandler?: () => void;
+  [key: string]: unknown;
 }
 
 export interface ModalConfigI {
@@ -17,7 +19,7 @@ export interface ModalConfigI {
   primaryHandler?: () => void;
   secondaryHandler?: () => void;
   closeOutside?: boolean;
-  overrideContent?: ReactElement<OverrideContentPropsI>;
+  overrideContent?: ReactElement;
 }
 
 export interface ModalProviderContextI {

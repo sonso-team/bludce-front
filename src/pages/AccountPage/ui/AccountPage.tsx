@@ -14,7 +14,7 @@ const AccountPage: React.FC = () => {
     <div className="AccountPage">
       <Header
         title={'БЛЮДЦЕ'}
-        onBackButtonClick={() => {}}
+        withBackButton
       />
       <AccountWidget />
       <Button
