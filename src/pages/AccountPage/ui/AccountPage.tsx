@@ -1,6 +1,4 @@
 import React from 'react';
-import { BackButton } from '../../../shared/BackButton';
-import { Heading } from '../../../shared/Heading';
 import './account-page.scss';
 import { AccountWidget } from '../../../widgets/AccountWidget';
 import { Button } from '../../../shared/Button';

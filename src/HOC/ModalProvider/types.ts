@@ -1,5 +1,4 @@
 import type { ReactNode, ReactElement } from 'react';
-import React from 'react';
 
 export interface ModalProviderPropsI {
   children: ReactNode;

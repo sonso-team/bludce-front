@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import type { OverrideContentPropsI } from '../../../HOC/ModalProvider/types';
 import { iconMap } from '../../../utils/iconMap';
 import { Paragraph } from '../../../shared/Paragraph';

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './lobby-page.scss';
 import { Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
@@ -9,7 +9,7 @@ import { BillList } from '../../../widgets/BillList';
 import { Heading } from '../../../shared/Heading';
 import { useModal } from '../../../utils/useModal';
 import Loader from '../../../components/Loader';
-import { API_URL, WS_URL } from '../../../constants/endpoints/endpointConst';
+import { WS_URL } from '../../../constants/endpoints/endpointConst';
 import {
   lobbyInit,
   lobbyUpdate,
@@ -19,10 +19,10 @@ import { ShareLinkModalBody } from './ShareLinkModalBosy';
 
 export const LobbyPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { billsData, isConfigured, receiptId } = useAppSelector(
+  const { isConfigured, receiptId } = useAppSelector(
     (state) => state.billsReducer,
   );
-  const { isLoading, isConnected, state, isIniciator, userId } = useAppSelector(
+  const { isLoading, state, isIniciator, userId } = useAppSelector(
     (state) => state.lobbyReducer,
   );
   const { showModal } = useModal();
@@ -39,7 +39,6 @@ export const LobbyPage: React.FC = () => {
     socketRef.current = socket;
 
     socket.onmessage = (message: MessageEvent) => {
-      console.log('message', JSON.parse(message.data));
       const data = JSON.parse(message.data);
       switch (data.type) {
         case 'INIT':
@@ -51,13 +50,9 @@ export const LobbyPage: React.FC = () => {
       }
     };
 
-    socket.onclose = () => {
-      console.log('close');
-    };
+    socket.onclose = () => {};
 
-    socket.onopen = () => {
-      console.log('Успешно подключено');
-    };
+    socket.onopen = () => {};
     return () => socket.close();
   }, []);
 

@@ -1,5 +1,4 @@
 import type React from 'react';
-import type { BillItem } from '../../../redux/store/bill/types';
 import { Paragraph } from '../../../shared/Paragraph';
 import './bill-list.scss';
 import type { IBillStateItem } from '../../../redux/store/lobby/types';
