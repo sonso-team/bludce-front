@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { BackButton } from '../../../shared/BackButton';
 import { Heading } from '../../../shared/Heading';
 import './history-page.scss';
 import { HistoryItem } from '../../../components/HistoryItem';
@@ -14,8 +13,7 @@ const HistoryPage: React.FC = () => {
     dispatch(getHistory());
   }, [dispatch]);
   //     ^
-  //     |        вот этот ебан виноват если все сломалось
-  //Я ЕБЛАН, НАЧАЛ ДЕЛАТЬ СТРАНИЦУ АККАУНТА А ПОТОМ ЗАБЫЛ И НАЧАЛ ХУЯЧИТЬ СТРАНИЦУ ИСТОРИИ
+  //     |        вот этот виноват если все сломалось
   return (
     <div className="HistoryPage">
       <Header
@@ -29,7 +27,7 @@ const HistoryPage: React.FC = () => {
               key={item.id}
               date={item.date}
               billNumber={item.billNumber}
-              link={item.link}
+              id={item.id}
             />
           ))
         ) : (

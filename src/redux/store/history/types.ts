@@ -1,3 +1,4 @@
+import type { HistoryItem } from '../../../components/HistoryItem/model';
 import type { Bill } from '../bill/types';
 
 export interface IHistoryError {
@@ -10,12 +11,5 @@ export interface IHistoryState {
   historyData: HistoryItem[];
   message: null | string;
 }
-
-export type HistoryItem = {
-  id: string;
-  date: string;
-  billNumber: number;
-  link: string;
-};
 
 export type IHistoryResponse = Bill[];

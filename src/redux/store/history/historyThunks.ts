@@ -2,19 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { AxiosResponse } from 'axios';
 import { HISTORY_GET } from '../../../constants/endpoints/endpointConst.ts';
 import api from '../../../services/axios/api.ts';
-import type { Bill } from '../bill/types.ts';
-import { formatDate } from '../../../utils/dateFormat.ts';
-import type { HistoryItem, IHistoryError, IHistoryResponse } from './types.ts';
-
-//перенести куда-нибудь? а куда?
-export const mapBillsToHistory = (bills: Bill[]): HistoryItem[] => {
-  return bills.map((bill) => ({
-    id: bill.receiptId,
-    date: formatDate(bill.createdAt),
-    billNumber: bills.indexOf(bill) + 1,
-    link: '', // тоже заглушка
-  }));
-};
+import type { IHistoryError, IHistoryResponse } from './types.ts';
 
 const getHistory = createAsyncThunk<
   IHistoryResponse,

@@ -1,3 +1,5 @@
+import type { IUser } from '../auth/types';
+
 export interface IBillError {
   message: string;
 }
@@ -18,11 +20,6 @@ export type BillItem = {
   price: number;
 };
 
-export type BillInitiator = {
-  id: string;
-  phoneNumber: string;
-  email: string;
-};
 // все что приходит по чеку
 export interface Bill {
   receiptId: string;
@@ -32,7 +29,7 @@ export interface Bill {
   personCount: number;
   createdAt: string;
   updatedAt: string;
-  initiator: BillInitiator;
+  initiator: IUser;
   positions: BillItem[];
 }
 

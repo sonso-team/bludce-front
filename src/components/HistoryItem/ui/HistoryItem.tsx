@@ -2,23 +2,17 @@ import React from 'react';
 import './history-item.scss';
 import { useNavigate } from 'react-router-dom';
 import { Heading } from '../../../shared/Heading';
+import type { HistoryItem as HistoryItemModel } from '../model';
 
-interface HistoryItemProps {
-  date: string;
-  billNumber: number;
-  link: string;
-}
-
-export const HistoryItem: React.FC<HistoryItemProps> = ({
+export const HistoryItem: React.FC<HistoryItemModel> = ({
   date,
   billNumber,
-  link,
 }) => {
   const navigate = useNavigate();
   return (
     <div
       className="HistoryItem"
-      onClick={() => navigate(link)}
+      onClick={() => navigate('/prn-endp')}
     >
       <Heading
         className="HistoryItem__Heading date"

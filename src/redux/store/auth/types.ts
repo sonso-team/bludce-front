@@ -2,7 +2,7 @@ export interface IUser {
   id: string;
   phoneNumber: string;
   email: string;
-  name: string;
+  name?: string;
 }
 export interface IAuthResponse {
   user: IUser;

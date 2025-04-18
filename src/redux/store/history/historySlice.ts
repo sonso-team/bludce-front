@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { IHistoryResponse, IHistoryState } from './types.ts';
-import { getHistory, mapBillsToHistory } from './historyThunks.ts';
+import { getHistory } from './historyThunks.ts';
+import { mapBillsToHistory } from './api/index.ts';
 
 const initialState: IHistoryState = {
   isLoading: false,
-  historyData: null,
+  historyData: [],
   isFetched: false,
   message: null,
 };
