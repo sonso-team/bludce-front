@@ -1,7 +1,6 @@
 import React from 'react';
 import './home-page.scss';
 import { useNavigate } from 'react-router-dom';
-import { Heading } from '../../shared/Heading';
 import { Paragraph } from '../../shared/Paragraph';
 import { Footer } from '../../widgets/Footer';
 import { BillInput } from '../../components/BillInput';

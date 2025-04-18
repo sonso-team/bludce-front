@@ -1,0 +1,27 @@
+.AccountWidget {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  margin: auto;
+  row-gap: 24px;
+  font-family: var(--secondary-ff), sans-serif;
+  &__name {
+    font-size: 32px;
+    font-weight: var(--default-weight);
+  }
+  &__element {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    &__description {
+      flex: 0.3;
+      text-align: left;
+    }
+    &__value {
+      font-weight: var(--extra-thin-weight);
+    }
+  }
+}

@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { IAuthState, IAuthResponse } from './types.ts';
+import type { IAuthState, IAuthResponse, IWhoAmIResponse } from './types.ts';
 import {
   login,
   logout,
   refresh,
   registration,
   sendCode,
+  getUser,
 } from './authThunks.ts';
 
 const initialState: IAuthState = {
@@ -23,7 +24,12 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setLogin(state, action: PayloadAction<{ login: string }>) {
-      state.user = { phoneNumber: action.payload.login, id: null, email: null };
+      state.user = {
+        phoneNumber: action.payload.login,
+        id: null,
+        email: null,
+        name: null,
+      };
     },
     setGoConfirmStep(state, action: PayloadAction<boolean>) {
       state.goConfirmStep = action.payload;
@@ -120,6 +126,24 @@ const authSlice = createSlice({
       .addCase(sendCode.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
+        state.message = action.payload.message;
+      })
+      .addCase(getUser.pending, (state) => {
+        state.isLoading = true;
+        state.message = null;
+      })
+      .addCase(
+        getUser.fulfilled,
+        (state, action: PayloadAction<IWhoAmIResponse>) => {
+          state.isLoading = false;
+          state.user.name = action.payload.name;
+          state.user.phoneNumber = action.payload.phoneNumber;
+          state.user.id = action.payload.id;
+          state.user.email = action.payload.email;
+        },
+      )
+      .addCase(getUser.rejected, (state, action) => {
+        state.isLoading = false;
         state.message = action.payload.message;
       });
   },

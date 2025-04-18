@@ -7,6 +7,8 @@ import { PrivateRoute } from '../PrivateRoute';
 import { MainLayout } from '../../layouts/MainLayout';
 import ConfigPage from '../../pages/ConfigPage/ui/ConfigPage';
 import ApprovePage from '../../pages/ApprovePage/ui/ApprovePage';
+import AccountPage from '../../pages/AccountPage/ui/AccountPage';
+import HistoryPage from '../../pages/HistoryPage/ui/HistoryPage.tsx';
 import { LobbyPage } from '../../pages/LobbyPage';
 import HomePage from './../../pages/HomePage/HomePage.tsx';
 
@@ -23,6 +25,12 @@ export const AppRouter: React.FC = () => {
           element={<AuthPage />}
         />
       </Route>
+      <Route element={<MainLayout />}>
+        <Route
+          path="/lobby/*"
+          element={<LobbyPage />}
+        />
+      </Route>
       <Route element={<PrivateRoute />}>
         <Route element={<MainLayout />}>
           <Route
@@ -34,12 +42,16 @@ export const AppRouter: React.FC = () => {
             element={<ApprovePage />}
           />
           <Route
-            path="/config"
-            element={<ConfigPage />}
+            path="/account"
+            element={<AccountPage />}
           />
           <Route
-            path="/lobby"
-            element={<LobbyPage />}
+            path="/history"
+            element={<HistoryPage />}
+          />
+          <Route
+            path="/config"
+            element={<ConfigPage />}
           />
         </Route>
       </Route>

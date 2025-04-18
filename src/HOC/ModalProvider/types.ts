@@ -4,8 +4,9 @@ export interface ModalProviderPropsI {
   children: ReactNode;
 }
 
-interface OverrideContentPropsI {
-  closeHandler: () => void;
+export interface OverrideContentPropsI {
+  closeHandler?: () => void;
+  [key: string]: unknown;
 }
 
 export interface ModalConfigI {

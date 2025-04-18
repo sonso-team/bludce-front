@@ -19,6 +19,7 @@ $breakpoint-5: 450px;
   --light-gray: #4c4c4c;
   --white: #ffffff;
   --orange: #e6a610;
+  --green: #10682a;
   --orange-50: rgba(230, 166, 16, 0.5);
   --orange-30: rgba(230, 166, 16, 0.3);
   --red: #cb2a06;
@@ -27,6 +28,8 @@ $breakpoint-5: 450px;
   --white-50: rgba(255, 255, 255, 0.5);
   --default-bg-color: var(--black);
   --disabled-bg: #c6c6c6;
+
+  --red-button: #b50000;
 
   --primary-color: #5936db;
 
@@ -38,4 +41,9 @@ $breakpoint-5: 450px;
   --admin-bg: #ecf4ff;
   --input-shadow: rgba(122, 154, 238, 0.25);
   --input-error-shadow: rgb(188, 34, 34);
+
+  // Font-Weight
+  --extra-thin-weight: 300;
+  --thin-weight: 400;
+  --default-weight: 500;
 }

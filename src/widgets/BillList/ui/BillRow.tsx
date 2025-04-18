@@ -9,6 +9,8 @@ interface IBillRowProps {
   item: BillItem;
   isEditable: boolean;
   index: number;
+  onClick?: () => void;
+  mode?: string;
 }
 
 interface IEditButtonsProps {
@@ -41,7 +43,7 @@ const EditButtons: React.FC<IEditButtonsProps> = ({
 };
 
 export const BillRow: React.FC<IBillRowProps> = memo(
-  ({ item, isEditable, index }) => {
+  ({ item, isEditable, index, onClick, mode }) => {
     const dispatch = useAppDispatch();
     const [isEditing, setIsEditing] = useState(false);
     const [name, setName] = useState(item.name);
@@ -61,7 +63,10 @@ export const BillRow: React.FC<IBillRowProps> = memo(
       dispatch(removeBillItem(index));
     };
     return (
-      <div className="BillList__row BillList__row">
+      <div
+        className={`BillList__row ${mode ? `BillList__row_${mode}` : ''}`}
+        onClick={onClick}
+      >
         {isEditing ? (
           <input
             type="text"
