@@ -16,6 +16,7 @@ export const Modal = React.forwardRef<HTMLDialogElement, ModalPropsI>(
       body,
       title,
       icon,
+      isPopup = true,
       primaryText = 'Продолжить',
       secondaryText = 'Закрыть',
       overrideContent,
@@ -53,13 +54,15 @@ export const Modal = React.forwardRef<HTMLDialogElement, ModalPropsI>(
                 >
                   {primaryText}
                 </Button>
-                <Button
-                  onClick={secondaryHandler}
-                  style="secondary"
-                  custom
-                >
-                  {secondaryText}
-                </Button>
+                {!isPopup && (
+                  <Button
+                    onClick={secondaryHandler}
+                    style="secondary"
+                    custom
+                  >
+                    {secondaryText}
+                  </Button>
+                )}
               </div>
             </>
           )}

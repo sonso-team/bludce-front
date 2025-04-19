@@ -9,11 +9,13 @@ import { Header } from '../../../components/header';
 import { Button } from '../../../shared/Button';
 import { hideLocalLoader, showLocalLoader } from '../../../redux/store/loader';
 import { confirmBill } from '../../../redux/store/bill/billThunks';
+import { useModal } from '../../../utils/useModal';
 
 const ApprovePage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { billsData, isFetched, receiptId } = useAppSelector(
+  const { showModal } = useModal();
+  const { billsData, isFetched, receiptId, isError, message } = useAppSelector(
     (state) => state.billsReducer,
   );
 
@@ -22,6 +24,17 @@ const ApprovePage: React.FC = () => {
       navigate('/config');
     }
   }, [receiptId]);
+
+  useEffect(() => {
+    if (isError) {
+      showModal({
+        body: message,
+        isPopup: true,
+        icon: 'error',
+        primaryText: 'Понятно',
+      });
+    }
+  }, [isError]);
 
   const submitHadler = () => {
     dispatch(showLocalLoader());

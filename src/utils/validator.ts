@@ -34,7 +34,7 @@ const isInRange = (
   params: { min: number; max: number },
 ): boolean => {
   const { min, max } = params;
-  return typeof value === 'number' && value >= min && value <= max;
+  return Number(value) < min || Number(value) > max;
 };
 
 const isEmail = (value: string): boolean => {

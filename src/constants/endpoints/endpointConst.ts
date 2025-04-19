@@ -1,4 +1,4 @@
-const API_URL: string = 'https://bank.uwu-devcrew.ru';
+const API_URL: string = 'http://bank.uwu-devcrew.ru';
 const WS_URL: string = 'ws://bank.uwu-devcrew.ru';
 const AUTH_REFRESH: string = '/api/auth/refresh';
 const AUTH_LOGIN: string = '/api/auth/authorization';

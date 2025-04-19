@@ -8,6 +8,7 @@ interface ButtonPropsI {
   className?: string;
   onClick: (event: unknown) => void;
   custom?: boolean;
+  color?: 'default' | 'red' | 'green';
   style?: 'primary' | 'secondary';
   children: ReactElement | string;
 }
@@ -28,12 +29,13 @@ export const Button: React.FC<ButtonPropsI> = ({ ...props }) => {
     className,
     disabled = false,
     onClick,
+    color = 'default',
     children,
   } = props;
 
   return (
     <button
-      className={`button button_${style} ${custom ? 'button_custom' : ''} ${className || ''}`}
+      className={`button button_${style} ${custom ? 'button_custom' : ''} button_${color} ${className || ''}`}
       onClick={onClick}
       disabled={disabled}
     >

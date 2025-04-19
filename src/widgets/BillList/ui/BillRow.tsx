@@ -11,6 +11,7 @@ interface IBillRowProps {
   index: number;
   onClick?: () => void;
   mode?: string;
+  isIniciatorView?: boolean;
 }
 
 interface IEditButtonsProps {
@@ -43,7 +44,7 @@ const EditButtons: React.FC<IEditButtonsProps> = ({
 };
 
 export const BillRow: React.FC<IBillRowProps> = memo(
-  ({ item, isEditable, index, onClick, mode }) => {
+  ({ item, isEditable, index, onClick, mode, isIniciatorView }) => {
     const dispatch = useAppDispatch();
     const [isEditing, setIsEditing] = useState(false);
     const [name, setName] = useState(item.name);
@@ -64,14 +65,14 @@ export const BillRow: React.FC<IBillRowProps> = memo(
     };
     return (
       <div
-        className={`BillList__row ${mode ? `BillList__row_${mode}` : ''}`}
+        className={`BillList__row ${mode && !isIniciatorView ? `BillList__row_${mode}` : ''}`}
         onClick={onClick}
       >
         {isEditing ? (
           <input
             type="text"
             className="BillList__input BillList__column"
-            value={name}
+            value={name || ''}
             onChange={(e) => setName(e.target.value)}
           />
         ) : (
@@ -81,7 +82,7 @@ export const BillRow: React.FC<IBillRowProps> = memo(
           <input
             type="text"
             className="BillList__input BillList__column"
-            value={quantity}
+            value={quantity || 0}
             onChange={(e) => setQuantity(Number(e.target.value))}
           />
         ) : (
@@ -92,7 +93,7 @@ export const BillRow: React.FC<IBillRowProps> = memo(
             <input
               type="text"
               className="BillList__input"
-              value={price}
+              value={price || 0}
               onChange={(e) => setPrice(Number(e.target.value))}
             />
           ) : (
@@ -103,6 +104,11 @@ export const BillRow: React.FC<IBillRowProps> = memo(
               isEditing={isEditing}
               deleteHandle={deleteHandler}
               editHandle={editHandler}
+            />
+          )}
+          {isIniciatorView && (
+            <div
+              className={`BillList__statusDot BillList__statusDot_${mode}`}
             />
           )}
         </div>

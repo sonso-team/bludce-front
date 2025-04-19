@@ -36,6 +36,9 @@ export const BillInput: React.FC<IBillInputProps> = ({ onSuccess }) => {
     dispatch(showLocalLoader());
     dispatch(sendBill(formData)).then(() => {
       dispatch(hideLocalLoader());
+      if (inputRef.current) {
+        inputRef.current.value = '';
+      }
     });
   };
 
