@@ -1,0 +1,36 @@
+.CommonInputWrapper {
+  display: flex;
+  font-size: 18px;
+  padding: 24px 22px;
+  margin-bottom: 22px;
+  box-shadow: 0 0 0 1px var(--light-gray);
+  background-color: var(--black-blur);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  width: 100%;
+  position: relative;
+  max-width: 341px;
+  column-gap: 10px;
+
+  &_invalid {
+    box-shadow: 0 0 0 1px var(--red);
+  }
+
+  &__input {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 64%;
+    flex-shrink: 1;
+    flex-grow: 1;
+    text-align: right;
+  }
+
+  &__label {
+    min-width: 150px;
+  }
+
+  &__error {
+    position: absolute;
+    top: 100%;
+  }
+}

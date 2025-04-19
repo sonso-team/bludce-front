@@ -14,7 +14,7 @@
     flex: 1;
   }
 
-  &_primary {
+  &_default {
     color: var(--white);
     background-color: var(--orange);
     &:disabled {
@@ -25,9 +25,38 @@
     }
   }
 
+  &_green {
+    background-color: var(--green);
+
+    &:disabled {
+      background-color: rgba(16, 104, 42, 0.5);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: rgba(16, 104, 42, 0.68);
+    }
+  }
+
+  &_red {
+    background-color: var(--red);
+
+    &:disabled {
+      background-color: rgba(203, 42, 6, 0.5);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: rgba(203, 42, 6, 0.67);
+    }
+  }
+
   &_secondary {
     color: var(--white);
     box-shadow: 0 0 0 1px var(--white);
     background-color: var(--orange-30);
+
+    &:disabled {
+      box-shadow: none;
+      opacity: 0.7;
+    }
   }
 }

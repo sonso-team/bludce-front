@@ -12,6 +12,7 @@ export interface OverrideContentPropsI {
 export interface ModalConfigI {
   icon?: string;
   title?: string;
+  isPopup?: boolean;
   body?: ReactElement | string;
   primaryText?: string;
   secondaryText?: string;

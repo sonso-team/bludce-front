@@ -10,6 +10,7 @@ import ApprovePage from '../../pages/ApprovePage/ui/ApprovePage';
 import AccountPage from '../../pages/AccountPage/ui/AccountPage';
 import HistoryPage from '../../pages/HistoryPage/ui/HistoryPage.tsx';
 import { LobbyPage } from '../../pages/LobbyPage';
+import { FinalPage } from '../../pages/FinalPage';
 import HomePage from './../../pages/HomePage/HomePage.tsx';
 
 export const AppRouter: React.FC = () => {
@@ -29,6 +30,10 @@ export const AppRouter: React.FC = () => {
         <Route
           path="/lobby/*"
           element={<LobbyPage />}
+        />
+        <Route
+          path="/final"
+          element={<FinalPage />}
         />
       </Route>
       <Route element={<PrivateRoute />}>
