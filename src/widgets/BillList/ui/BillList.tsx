@@ -10,6 +10,7 @@ interface IBillListProps {
   isLiveTime?: boolean;
   onPick?: (item: IBillStateItem, index: number) => void;
   myId?: string;
+  isIniciatorView?: boolean;
 }
 
 export const BillList: React.FC<IBillListProps> = ({ ...props }) => {
@@ -17,6 +18,7 @@ export const BillList: React.FC<IBillListProps> = ({ ...props }) => {
     billItems = [],
     isEditable = false,
     isLiveTime = false,
+    isIniciatorView = false,
     onPick,
     myId,
   } = props;
@@ -56,10 +58,9 @@ export const BillList: React.FC<IBillListProps> = ({ ...props }) => {
             );
           }
           let mode;
-          if (item.userId) {
-            if (item.paidBy) {
-              mode = 'green';
-            }
+          if (item.paidBy) {
+            mode = 'green';
+          } else if (item.userId) {
             if (item.userId !== myId) {
               mode = 'yellow';
             } else {
@@ -68,8 +69,21 @@ export const BillList: React.FC<IBillListProps> = ({ ...props }) => {
           } else {
             mode = 'default';
           }
+          if (isIniciatorView) {
+            return (
+              <BillRow
+                isIniciatorView={true}
+                item={item}
+                isEditable={false}
+                key={`${item.name}${item.quantity}`}
+                index={index}
+                mode={mode === 'green' ? mode : 'red'}
+              />
+            );
+          }
           return (
             <BillRow
+              isIniciatorView={false}
               item={item}
               isEditable={isEditable}
               key={`${item.name}${item.quantity}`}

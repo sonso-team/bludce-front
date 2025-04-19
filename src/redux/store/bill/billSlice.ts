@@ -42,6 +42,10 @@ const billSlice = createSlice({
     unsetIsConfigured(state) {
       state.isConfigured = false;
     },
+    clearError(state) {
+      state.isError = false;
+      state.message = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -60,8 +64,9 @@ const billSlice = createSlice({
           state.isLoading = false;
         },
       )
-      .addCase(sendBill.rejected, (state, action) => {
-        state.message = action.payload.message;
+      .addCase(sendBill.rejected, (state) => {
+        state.message =
+          'Упс.. API OCR которой мы пользуемся сейчас отдыхает ! Попробуйте ещё раз через время.';
         state.isError = true;
         state.isLoading = false;
         state.isFetched = false;
@@ -117,5 +122,6 @@ export const {
   removeBillItem,
   unsetIsConfigured,
   updateBillData,
+  clearError,
 } = billSlice.actions;
 export default billSlice.reducer;

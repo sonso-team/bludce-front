@@ -1,6 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import './lobby-page.scss';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { unsetIsConfigured } from '../../../redux/store/bill';
 import { Header } from '../../../components/header';
@@ -11,27 +17,42 @@ import { useModal } from '../../../utils/useModal';
 import Loader from '../../../components/Loader';
 import { WS_URL } from '../../../constants/endpoints/endpointConst';
 import {
+  lobbyClearState,
   lobbyInit,
   lobbyUpdate,
   lobbyUpdateState,
 } from '../../../redux/store/lobby';
+import { receiptTypes } from '../../../constants/enums/billEnums';
+import { PaymentInfoWidget } from '../../../widgets/PaymentInfoWidget';
+import type { CommonInputRef } from '../../../shared/СommonInput';
+import { Paragraph } from '../../../shared/Paragraph';
+import { hideLocalLoader, showLocalLoader } from '../../../redux/store/loader';
+import { makePayment } from '../../../redux/store/lobby/lobbyThunks';
 import { ShareLinkModalBody } from './ShareLinkModalBosy';
 
 export const LobbyPage: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { isConfigured, receiptId } = useAppSelector(
     (state) => state.billsReducer,
   );
-  const { isLoading, state, isIniciator, userId } = useAppSelector(
-    (state) => state.lobbyReducer,
-  );
+  const [isValid, setIsValid] = useState<boolean>(false);
+  const tipsRef = useRef<CommonInputRef>(null);
+  const {
+    isLoading,
+    state,
+    isIniciator,
+    userId,
+    fullAmount,
+    tipsType,
+    receiptType,
+    tipsAmount,
+    tipsPercent,
+    userAmount,
+    isPayed,
+  } = useAppSelector((state) => state.lobbyReducer);
   const { showModal } = useModal();
-
   const socketRef = useRef<WebSocket | null>(null);
-
-  const shareLinkModalConfig = {
-    overrideContent: <ShareLinkModalBody receiptId={receiptId} />,
-  };
 
   useEffect(() => {
     const restUrl = window.location.pathname.split('/').pop();
@@ -53,11 +74,42 @@ export const LobbyPage: React.FC = () => {
     socket.onclose = () => {};
 
     socket.onopen = () => {};
+
     return () => socket.close();
   }, []);
 
+  useEffect(() => {
+    if (tipsPercent || tipsAmount || tipsType === receiptTypes.NONE) {
+      setIsValid(true);
+    }
+  }, [tipsPercent, tipsAmount]);
+
+  const getIsValid = useCallback(() => {
+    if (!tipsRef.current) {
+      return true;
+    }
+    return !tipsRef.current?.isError && tipsRef.current.isDirty;
+  }, []);
+
+  const shareLinkModalConfig = {
+    overrideContent: <ShareLinkModalBody receiptId={receiptId} />,
+  };
+
+  const paymentHandler = () => {
+    dispatch(showLocalLoader());
+    dispatch(
+      makePayment({
+        userId,
+        receiptId: receiptId || window.location.pathname.split('/').pop(),
+        tips: finalUserTips || tipsAmount || 0,
+      }),
+    ).then(() => {
+      dispatch(hideLocalLoader());
+    });
+  };
+
   const pickHandler = (item, index) => {
-    if (item.userId && item.userId !== userId) {
+    if ((item.userId && item.userId !== userId) || item.paidBy) {
       return;
     }
     const data = Array.from(state);
@@ -70,10 +122,28 @@ export const LobbyPage: React.FC = () => {
     }
     data[index] = newItem;
     dispatch(lobbyUpdateState(data));
+
+    // ToDo Не знаю будет ли работать без таймаута, пробовать боюсь
     setTimeout(() => {
       socketRef.current.send(JSON.stringify(data));
     }, 0);
   };
+
+  const finalUserAmount = useMemo(() => {
+    return state.reduce((acc, item) => {
+      return item.userId === userId ? acc + item.price : acc;
+    }, 0);
+  }, [state]);
+
+  const finalUserTips = useMemo(() => {
+    return (finalUserAmount * tipsPercent) / 100;
+  }, [finalUserAmount]);
+
+  useEffect(() => {
+    if (isPayed) {
+      navigate('/final');
+    }
+  }, [isPayed]);
 
   if (!isConfigured && isIniciator) {
     return <Navigate to="/home" />;
@@ -89,28 +159,63 @@ export const LobbyPage: React.FC = () => {
         title="БЛЮДЦЕ"
         subtitle="ЧЕК"
         withBackButton={true}
-        onBackButtonClick={() => dispatch(unsetIsConfigured())}
+        onBackButtonClick={() => {
+          dispatch(unsetIsConfigured());
+          dispatch(lobbyClearState());
+        }}
       />
       <div className="LobbyPage__content">
-        <Heading
-          level={5}
-          className="LobbyPage__description"
-        >
-          Выберите позиции в чеке:
-        </Heading>
-        <BillList
-          billItems={state}
-          isLiveTime
-          onPick={pickHandler}
-          myId={userId}
-        />
+        {receiptType === receiptTypes.PROPORTIONALLY ? (
+          <>
+            <Heading
+              level={5}
+              className="LobbyPage__description"
+            >
+              Выберите позиции в чеке:
+            </Heading>
+            <BillList
+              billItems={state}
+              isLiveTime
+              onPick={pickHandler}
+              myId={userId}
+            />
+            <div className="LobbyPage__finalAmounts">
+              <div className="LobbyPage__finalTipsAmount">
+                <Paragraph level={4}>Чаевые:</Paragraph>
+                <Paragraph level={4}>
+                  {tipsAmount ? tipsAmount.toFixed(2) : finalUserTips}р.
+                </Paragraph>
+              </div>
+              <div className="LobbyPage__finalAmmount">
+                <Heading level={5}>Итого:</Heading>
+                <Heading level={5}>
+                  {`${finalUserAmount + Number(tipsAmount ? tipsAmount.toFixed(2) : finalUserTips)}р.`}
+                </Heading>
+              </div>
+            </div>
+          </>
+        ) : (
+          <PaymentInfoWidget
+            finalAmount={fullAmount}
+            personAmount={Number(userAmount.toFixed(2))}
+            withoutTips={tipsType === receiptTypes.NONE}
+            tipsAmount={
+              tipsType === receiptTypes.EVENLY
+                ? Number(tipsAmount.toFixed(2))
+                : Number(((userAmount * tipsPercent) / 100).toFixed(2))
+            }
+            onChange={() => setIsValid(getIsValid())}
+            ref={tipsRef}
+          />
+        )}
       </div>
       <div className="LobbyPage__buttons">
         {isIniciator ? (
           <>
             <Button
               className="LobbyPage__nextBtn"
-              onClick={() => 1}
+              onClick={paymentHandler}
+              disabled={!isValid}
               style="secondary"
             >
               Сохранить
@@ -124,8 +229,10 @@ export const LobbyPage: React.FC = () => {
           </>
         ) : (
           <Button
-            onClick={() => 1}
+            onClick={paymentHandler}
             className="LobbyPage__payBtn"
+            color="green"
+            disabled={!isValid}
           >
             Оплатить
           </Button>

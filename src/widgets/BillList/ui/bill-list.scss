@@ -3,7 +3,7 @@
 .BillList {
   width: calc(100% + 30px);
   max-height: 512px;
-  height: 56.25vh;
+  height: 56vh;
   overflow: scroll;
 
   &::-webkit-scrollbar {
@@ -95,6 +95,20 @@
 
     @media (max-width: $breakpoint-5) {
       font-size: 15px;
+    }
+  }
+
+  &__statusDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+
+    &_green {
+      background-color: var(--green);
+    }
+
+    &_red {
+      background-color: var(--red);
     }
   }
 }
