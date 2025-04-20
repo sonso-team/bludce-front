@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './final-page.scss';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../../../components/header';
@@ -8,11 +8,16 @@ import { BillList } from '../../../widgets/BillList';
 import { receiptTypes } from '../../../constants/enums/billEnums';
 import { Paragraph } from '../../../shared/Paragraph';
 import { Button } from '../../../shared/Button';
+import { closeSocket } from '../../../services/ws';
 
 export const FinalPage: React.FC = () => {
   const navigate = useNavigate();
   const { isIniciator, state, amount, fullAmount, receiptType } =
     useAppSelector((state) => state.lobbyReducer);
+
+  useEffect(() => {
+    return () => closeSocket();
+  }, []);
 
   if (isIniciator) {
     return (
@@ -26,6 +31,7 @@ export const FinalPage: React.FC = () => {
             <BillList
               billItems={state}
               isIniciatorView={true}
+              isLiveTime={true}
             />
           )}
           <div className="FinalPage__finalAmmount">
@@ -35,7 +41,9 @@ export const FinalPage: React.FC = () => {
         </div>
         <Button
           className="FinalPage__button"
-          onClick={() => navigate('/home')}
+          onClick={() => {
+            navigate('/home');
+          }}
           disabled={amount !== fullAmount}
         >
           Закрыть счет
