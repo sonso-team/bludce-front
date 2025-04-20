@@ -36,7 +36,9 @@ export const FinalPage: React.FC = () => {
           )}
           <div className="FinalPage__finalAmmount">
             <Paragraph level={1}>Итого:</Paragraph>
-            <Paragraph level={1}>{`${amount}/${fullAmount}р.`}</Paragraph>
+            <Paragraph
+              level={1}
+            >{`${amount.toFixed(2)}/${fullAmount}р.`}</Paragraph>
           </div>
         </div>
         <Button
