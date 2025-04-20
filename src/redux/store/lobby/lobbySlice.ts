@@ -48,6 +48,7 @@ const lobbySlice = createSlice({
     },
     lobbyUpdate(state, action: PayloadAction<ILobbyMessage>) {
       state.state = action.payload.state;
+      state.amount = action.payload.amount;
     },
     lobbyUpdateState(state, action: PayloadAction<IBillStateItem[]>) {
       state.state = action.payload;

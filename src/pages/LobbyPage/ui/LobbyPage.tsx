@@ -28,6 +28,7 @@ import type { CommonInputRef } from '../../../shared/СommonInput';
 import { Paragraph } from '../../../shared/Paragraph';
 import { hideLocalLoader, showLocalLoader } from '../../../redux/store/loader';
 import { makePayment } from '../../../redux/store/lobby/lobbyThunks';
+import { closeSocket, getSocket } from '../../../services/ws';
 import { ShareLinkModalBody } from './ShareLinkModalBosy';
 
 export const LobbyPage: React.FC = () => {
@@ -56,10 +57,11 @@ export const LobbyPage: React.FC = () => {
 
   useEffect(() => {
     const restUrl = window.location.pathname.split('/').pop();
-    const socket = new WebSocket(`${WS_URL}/ws/lobby/${receiptId || restUrl}`);
+    const socket = getSocket(receiptId || restUrl);
     socketRef.current = socket;
 
     socket.onmessage = (message: MessageEvent) => {
+      console.log(JSON.parse(message.data));
       const data = JSON.parse(message.data);
       switch (data.type) {
         case 'INIT':
@@ -74,15 +76,13 @@ export const LobbyPage: React.FC = () => {
     socket.onclose = () => {};
 
     socket.onopen = () => {};
-
-    return () => socket.close();
   }, []);
 
   useEffect(() => {
     if (tipsPercent || tipsAmount || tipsType === receiptTypes.NONE) {
       setIsValid(true);
     }
-  }, [tipsPercent, tipsAmount]);
+  }, [tipsPercent, tipsAmount, tipsType]);
 
   const getIsValid = useCallback(() => {
     if (!tipsRef.current) {
@@ -141,6 +141,9 @@ export const LobbyPage: React.FC = () => {
 
   useEffect(() => {
     if (isPayed) {
+      if (!isIniciator) {
+        closeSocket();
+      }
       navigate('/final');
     }
   }, [isPayed]);
