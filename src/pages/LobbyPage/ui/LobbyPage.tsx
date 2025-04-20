@@ -15,7 +15,6 @@ import { BillList } from '../../../widgets/BillList';
 import { Heading } from '../../../shared/Heading';
 import { useModal } from '../../../utils/useModal';
 import Loader from '../../../components/Loader';
-import { WS_URL } from '../../../constants/endpoints/endpointConst';
 import {
   lobbyClearState,
   lobbyInit,
