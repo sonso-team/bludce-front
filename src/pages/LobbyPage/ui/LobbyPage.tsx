@@ -158,10 +158,6 @@ export const LobbyPage: React.FC = () => {
       navigate('/final');
     }
   }, [isPayed]);
-  console.log(isIniciator);
-  if (!isConfigured && isIniciator) {
-    return <Navigate to="/home" />;
-  }
 
   if (isLoading) {
     return <Loader type="global" />;
