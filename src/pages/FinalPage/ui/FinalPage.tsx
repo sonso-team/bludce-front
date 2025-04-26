@@ -1,20 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './final-page.scss';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../../../components/header';
 import { Heading } from '../../../shared/Heading';
-import { useAppSelector } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { BillList } from '../../../widgets/BillList';
 import { receiptTypes } from '../../../constants/enums/billEnums';
 import { Paragraph } from '../../../shared/Paragraph';
 import { Button } from '../../../shared/Button';
+import { lobbyClear } from '../../../redux/store/lobby';
 
 export const FinalPage: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { isIniciator, state, amount, fullAmount, receiptType } =
     useAppSelector((state) => state.lobbyReducer);
 
-  if (isIniciator) {
+  useEffect(() => {
+    return () => {
+      dispatch(lobbyClear());
+    };
+  }, []);
+
+  if (isIniciator || localStorage.getItem('isIniciator')) {
     return (
       <div className="FinalPage">
         <Header
