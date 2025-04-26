@@ -15,7 +15,6 @@ import { BillList } from '../../../widgets/BillList';
 import { Heading } from '../../../shared/Heading';
 import { useModal } from '../../../utils/useModal';
 import Loader from '../../../components/Loader';
-import { WS_URL } from '../../../constants/endpoints/endpointConst';
 import {
   lobbyClear,
   lobbyInit,
@@ -28,6 +27,7 @@ import type { CommonInputRef } from '../../../shared/СommonInput';
 import { Paragraph } from '../../../shared/Paragraph';
 import { hideLocalLoader, showLocalLoader } from '../../../redux/store/loader';
 import { makePayment } from '../../../redux/store/lobby/lobbyThunks';
+import { closeSocket, getSocket } from '../../../services/ws';
 import { ShareLinkModalBody } from './ShareLinkModalBosy';
 
 export const LobbyPage: React.FC = () => {
@@ -51,16 +51,14 @@ export const LobbyPage: React.FC = () => {
     userAmount,
     isPayed,
   } = useAppSelector((state) => state.lobbyReducer);
-
   const { showModal } = useModal();
   const socketRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
     const restUrl = window.location.pathname.split('/').pop();
-    const lastUserId = localStorage.getItem('userId');
-    let socket = new WebSocket(
-      `${WS_URL}/ws/lobby/${receiptId || restUrl}/${lastUserId || ''}`,
-    );
+    const lastUserId = localStorage.getItem('userId') || '';
+    const socket = getSocket(receiptId || restUrl, lastUserId);
+    socketRef.current = socket;
 
     const messageHandler = (message: MessageEvent) => {
       const data = JSON.parse(message.data);
@@ -75,49 +73,33 @@ export const LobbyPage: React.FC = () => {
     };
 
     const reconnectHandler = () => {
-      if (
-        document.visibilityState === 'visible' &&
-        (socket.readyState === socket.CLOSED ||
-          socket.readyState === socket.CLOSING)
-      ) {
-        socket = new WebSocket(
-          `${WS_URL}/ws/lobby/${receiptId || restUrl}/${lastUserId || ''}`,
-        );
+      if (document.visibilityState === 'visible') {
+        const socket = getSocket(receiptId || restUrl, lastUserId);
         socket.onmessage = messageHandler;
+        socketRef.current = socket;
       }
     };
 
     document.addEventListener('visibilitychange', reconnectHandler);
 
-    socketRef.current = socket;
-
     socket.onmessage = messageHandler;
 
     return () => {
       if (!isIniciator) {
-        socket.close();
         document.removeEventListener('visibilitychange', reconnectHandler);
+        closeSocket();
       }
     };
   }, []);
 
   useEffect(() => {
-    if (
-      tipsPercent ||
-      tipsAmount ||
-      tipsType === receiptTypes.NONE ||
-      tipsType === receiptTypes.FOR_KICKS
-    ) {
+    if (tipsPercent || tipsAmount || tipsType === receiptTypes.NONE) {
       setIsValid(true);
     }
   }, [tipsPercent, tipsAmount, tipsType]);
 
   const getIsValid = useCallback(() => {
-    if (
-      !tipsRef.current ||
-      tipsType === receiptTypes.NONE ||
-      tipsType === receiptTypes.FOR_KICKS
-    ) {
+    if (!tipsRef.current) {
       return true;
     }
     return !tipsRef.current?.isError && tipsRef.current.isDirty;
@@ -176,7 +158,7 @@ export const LobbyPage: React.FC = () => {
       navigate('/final');
     }
   }, [isPayed]);
-
+  console.log(isIniciator);
   if (!isConfigured && isIniciator) {
     return <Navigate to="/home" />;
   }

@@ -3,26 +3,23 @@ import './final-page.scss';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../../../components/header';
 import { Heading } from '../../../shared/Heading';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { useAppSelector } from '../../../redux/hooks';
 import { BillList } from '../../../widgets/BillList';
 import { receiptTypes } from '../../../constants/enums/billEnums';
 import { Paragraph } from '../../../shared/Paragraph';
 import { Button } from '../../../shared/Button';
-import { lobbyClear } from '../../../redux/store/lobby';
+import { closeSocket } from '../../../services/ws';
 
 export const FinalPage: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const { isIniciator, state, amount, fullAmount, receiptType } =
     useAppSelector((state) => state.lobbyReducer);
 
   useEffect(() => {
-    return () => {
-      dispatch(lobbyClear());
-    };
+    return () => closeSocket();
   }, []);
 
-  if (isIniciator || localStorage.getItem('isIniciator')) {
+  if (isIniciator) {
     return (
       <div className="FinalPage">
         <Header
@@ -34,6 +31,7 @@ export const FinalPage: React.FC = () => {
             <BillList
               billItems={state}
               isIniciatorView={true}
+              isLiveTime={true}
             />
           )}
           <div className="FinalPage__finalAmmount">
@@ -45,7 +43,9 @@ export const FinalPage: React.FC = () => {
         </div>
         <Button
           className="FinalPage__button"
-          onClick={() => navigate('/home')}
+          onClick={() => {
+            navigate('/home');
+          }}
           disabled={amount !== fullAmount}
         >
           Закрыть счет

@@ -31,6 +31,7 @@ const lobbySlice = createSlice({
   initialState,
   reducers: {
     setIsIniciator(state) {
+      localStorage.setItem('isIniciator', 'true');
       state.isIniciator = true;
     },
     lobbyInit(state, action: PayloadAction<ILobbyMessage>) {
@@ -45,11 +46,11 @@ const lobbySlice = createSlice({
       state.tipsType = action.payload.tipsType;
       state.receiptType = action.payload.receiptType;
       localStorage.setItem('userId', action.payload.userId);
-      localStorage.setItem('isIniciator', 'true');
       state.isLoading = false;
     },
     lobbyUpdate(state, action: PayloadAction<ILobbyMessage>) {
       state.state = action.payload.state;
+      state.amount = action.payload.amount;
     },
     lobbyUpdateState(state, action: PayloadAction<IBillStateItem[]>) {
       state.state = action.payload;
