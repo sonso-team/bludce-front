@@ -16,7 +16,7 @@ import { Heading } from '../../../shared/Heading';
 import { useModal } from '../../../utils/useModal';
 import Loader from '../../../components/Loader';
 import {
-  lobbyClearState,
+  lobbyClear,
   lobbyInit,
   lobbyUpdate,
   lobbyUpdateState,
@@ -56,11 +56,11 @@ export const LobbyPage: React.FC = () => {
 
   useEffect(() => {
     const restUrl = window.location.pathname.split('/').pop();
-    const socket = getSocket(receiptId || restUrl);
+    const lastUserId = localStorage.getItem('userId') || '';
+    const socket = getSocket(receiptId || restUrl, lastUserId);
     socketRef.current = socket;
 
-    socket.onmessage = (message: MessageEvent) => {
-      console.log(JSON.parse(message.data));
+    const messageHandler = (message: MessageEvent) => {
       const data = JSON.parse(message.data);
       switch (data.type) {
         case 'INIT':
@@ -72,9 +72,24 @@ export const LobbyPage: React.FC = () => {
       }
     };
 
-    socket.onclose = () => {};
+    const reconnectHandler = () => {
+      if (document.visibilityState === 'visible') {
+        const socket = getSocket(receiptId || restUrl, lastUserId);
+        socket.onmessage = messageHandler;
+        socketRef.current = socket;
+      }
+    };
 
-    socket.onopen = () => {};
+    document.addEventListener('visibilitychange', reconnectHandler);
+
+    socket.onmessage = messageHandler;
+
+    return () => {
+      if (!isIniciator) {
+        document.removeEventListener('visibilitychange', reconnectHandler);
+        closeSocket();
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -140,13 +155,10 @@ export const LobbyPage: React.FC = () => {
 
   useEffect(() => {
     if (isPayed) {
-      if (!isIniciator) {
-        closeSocket();
-      }
       navigate('/final');
     }
   }, [isPayed]);
-
+  console.log(isIniciator);
   if (!isConfigured && isIniciator) {
     return <Navigate to="/home" />;
   }
@@ -163,7 +175,7 @@ export const LobbyPage: React.FC = () => {
         withBackButton={true}
         onBackButtonClick={() => {
           dispatch(unsetIsConfigured());
-          dispatch(lobbyClearState());
+          dispatch(lobbyClear());
         }}
       />
       <div className="LobbyPage__content">
