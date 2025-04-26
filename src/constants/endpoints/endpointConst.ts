@@ -1,5 +1,5 @@
-const API_URL: string = 'http://192.168.0.102:7200';
-const WS_URL: string = 'ws://192.168.0.102:7200';
+const API_URL: string = 'https://bank.uwu-devcrew.ru';
+const WS_URL: string = 'wss://bank.uwu-devcrew.ru';
 const AUTH_REFRESH: string = '/api/auth/refresh';
 const AUTH_LOGIN: string = '/api/auth/authorization';
 const AUTH_REG: string = '/api/auth/registration';
