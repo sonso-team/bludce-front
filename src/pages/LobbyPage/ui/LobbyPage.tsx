@@ -17,7 +17,7 @@ import { useModal } from '../../../utils/useModal';
 import Loader from '../../../components/Loader';
 import { WS_URL } from '../../../constants/endpoints/endpointConst';
 import {
-  lobbyClearState,
+  lobbyClear,
   lobbyInit,
   lobbyUpdate,
   lobbyUpdateState,
@@ -51,15 +51,18 @@ export const LobbyPage: React.FC = () => {
     userAmount,
     isPayed,
   } = useAppSelector((state) => state.lobbyReducer);
+
   const { showModal } = useModal();
   const socketRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
     const restUrl = window.location.pathname.split('/').pop();
-    const socket = new WebSocket(`${WS_URL}/ws/lobby/${receiptId || restUrl}`);
-    socketRef.current = socket;
+    const lastUserId = localStorage.getItem('userId');
+    let socket = new WebSocket(
+      `${WS_URL}/ws/lobby/${receiptId || restUrl}/${lastUserId || ''}`,
+    );
 
-    socket.onmessage = (message: MessageEvent) => {
+    const messageHandler = (message: MessageEvent) => {
       const data = JSON.parse(message.data);
       switch (data.type) {
         case 'INIT':
@@ -71,21 +74,50 @@ export const LobbyPage: React.FC = () => {
       }
     };
 
-    socket.onclose = () => {};
+    const reconnectHandler = () => {
+      if (
+        document.visibilityState === 'visible' &&
+        (socket.readyState === socket.CLOSED ||
+          socket.readyState === socket.CLOSING)
+      ) {
+        socket = new WebSocket(
+          `${WS_URL}/ws/lobby/${receiptId || restUrl}/${lastUserId || ''}`,
+        );
+        socket.onmessage = messageHandler;
+      }
+    };
 
-    socket.onopen = () => {};
+    document.addEventListener('visibilitychange', reconnectHandler);
 
-    return () => socket.close();
+    socketRef.current = socket;
+
+    socket.onmessage = messageHandler;
+
+    return () => {
+      if (!isIniciator) {
+        socket.close();
+        document.removeEventListener('visibilitychange', reconnectHandler);
+      }
+    };
   }, []);
 
   useEffect(() => {
-    if (tipsPercent || tipsAmount || tipsType === receiptTypes.NONE) {
+    if (
+      tipsPercent ||
+      tipsAmount ||
+      tipsType === receiptTypes.NONE ||
+      tipsType === receiptTypes.FOR_KICKS
+    ) {
       setIsValid(true);
     }
-  }, [tipsPercent, tipsAmount]);
+  }, [tipsPercent, tipsAmount, tipsType]);
 
   const getIsValid = useCallback(() => {
-    if (!tipsRef.current) {
+    if (
+      !tipsRef.current ||
+      tipsType === receiptTypes.NONE ||
+      tipsType === receiptTypes.FOR_KICKS
+    ) {
       return true;
     }
     return !tipsRef.current?.isError && tipsRef.current.isDirty;
@@ -161,7 +193,7 @@ export const LobbyPage: React.FC = () => {
         withBackButton={true}
         onBackButtonClick={() => {
           dispatch(unsetIsConfigured());
-          dispatch(lobbyClearState());
+          dispatch(lobbyClear());
         }}
       />
       <div className="LobbyPage__content">
