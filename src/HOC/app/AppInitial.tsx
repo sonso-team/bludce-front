@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Loader from '../../components/Loader';
+import { Loader } from '../../components/Loader';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { refresh } from '../../redux/store/auth/authThunks';
 import { AppRouter } from './index.ts';

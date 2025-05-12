@@ -1,1 +1,2 @@
-export * from './ui/OtpInput';
+export * from './model';
+export * from './ui';

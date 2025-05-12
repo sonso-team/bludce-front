@@ -5,13 +5,13 @@ import { WelcomePage } from '../../pages/WelcomePage';
 import { AuthPage } from '../../pages/AuthPage';
 import { PrivateRoute } from '../PrivateRoute';
 import { MainLayout } from '../../layouts/MainLayout';
-import ConfigPage from '../../pages/ConfigPage/ui/ConfigPage';
-import ApprovePage from '../../pages/ApprovePage/ui/ApprovePage';
-import AccountPage from '../../pages/AccountPage/ui/AccountPage';
-import HistoryPage from '../../pages/HistoryPage/ui/HistoryPage.tsx';
+import { ConfigPage } from '../../pages/ConfigPage';
+import { ApprovePage } from '../../pages/ApprovePage';
+import { AccountPage } from '../../pages/AccountPage';
+import { HistoryPage } from '../../pages/HistoryPage';
 import { LobbyPage } from '../../pages/LobbyPage';
 import { FinalPage } from '../../pages/FinalPage';
-import HomePage from './../../pages/HomePage/HomePage.tsx';
+import { HomePage } from '../../pages/HomePage';
 
 export const AppRouter: React.FC = () => {
   return (

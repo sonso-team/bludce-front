@@ -1,1 +1,1 @@
-export * from './ui/HistoryItem';
+export * from './ui';
