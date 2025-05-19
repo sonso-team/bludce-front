@@ -64,9 +64,8 @@ const billSlice = createSlice({
           state.isLoading = false;
         },
       )
-      .addCase(sendBill.rejected, (state) => {
-        state.message =
-          'Упс.. API OCR которой мы пользуемся сейчас отдыхает ! Попробуйте ещё раз через время.';
+      .addCase(sendBill.rejected, (state, action) => {
+        state.message = action.payload.message;
         state.isError = true;
         state.isLoading = false;
         state.isFetched = false;
