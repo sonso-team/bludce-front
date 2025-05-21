@@ -4,7 +4,9 @@ let socket: WebSocket | null = null;
 
 export const getSocket = (rest: string, userId: string = ''): WebSocket => {
   if (!socket || socket.readyState === WebSocket.CLOSED) {
-    socket = new WebSocket(`${WS_URL}/ws/lobby/${rest}/${userId}`);
+    socket = new WebSocket(
+      `${WS_URL}/ws/lobby/${rest}${userId ? `/${userId}` : ''}`,
+    );
   }
   return socket;
 };

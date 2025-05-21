@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { hideLocalLoader, showLocalLoader } from '../../../redux/store/loader';
 import { login } from '../../../redux/store/auth/authThunks';
 import type { OTPInputRef } from '../../../components/OtpInput';
+import { setGoConfirmStep } from '../../../redux/store/auth';
 
 export const useConfirmForm = () => {
   const dispatch = useAppDispatch();
@@ -25,6 +26,10 @@ export const useConfirmForm = () => {
       navigate('/home');
     }
   }, [dispatch, authState.isAuth]);
+
+  useEffect(() => {
+    dispatch(setGoConfirmStep(false));
+  }, [dispatch]);
 
   const submitHandler = () => {
     dispatch(

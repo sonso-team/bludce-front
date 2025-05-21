@@ -1,24 +1,8 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import { iconMap } from '../../../utils/iconMap';
-import type { BillItem } from '../../../redux/store/bill/types';
 import { Paragraph } from '../../../shared/Paragraph';
-import { removeBillItem, updateBillData } from '../../../redux/store/bill';
-import { useAppDispatch } from '../../../redux/hooks';
-
-interface IBillRowProps {
-  item: BillItem;
-  isEditable: boolean;
-  index: number;
-  onClick?: () => void;
-  mode?: string;
-  isIniciatorView?: boolean;
-}
-
-interface IEditButtonsProps {
-  isEditing: boolean;
-  deleteHandle: () => unknown;
-  editHandle: () => unknown;
-}
+import type { IBillRowProps, IEditButtonsProps } from '../model';
+import { useBillRow } from '../api';
 
 const EditButtons: React.FC<IEditButtonsProps> = ({
   isEditing,
@@ -45,24 +29,18 @@ const EditButtons: React.FC<IEditButtonsProps> = ({
 
 export const BillRow: React.FC<IBillRowProps> = memo(
   ({ item, isEditable, index, onClick, mode, isIniciatorView }) => {
-    const dispatch = useAppDispatch();
-    const [isEditing, setIsEditing] = useState(false);
-    const [name, setName] = useState(item.name);
-    const [quantity, setQuantity] = useState(item.quantity);
-    const [price, setPrice] = useState(item.price);
+    const {
+      isEditing,
+      name,
+      quantity,
+      price,
+      setName,
+      setPrice,
+      setQuantity,
+      deleteHandler,
+      editHandler,
+    } = useBillRow(item, index);
 
-    const editHandler = () => {
-      if (!isEditing) {
-        setIsEditing(true);
-      } else {
-        dispatch(updateBillData({ index, item: { name, quantity, price } }));
-        setIsEditing(false);
-      }
-    };
-
-    const deleteHandler = () => {
-      dispatch(removeBillItem(index));
-    };
     return (
       <div
         className={`BillList__row ${mode && !isIniciatorView ? `BillList__row_${mode}` : ''}`}

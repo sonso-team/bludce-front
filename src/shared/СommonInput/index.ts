@@ -1,1 +1,2 @@
-export * from './ui/CommonInput';
+export * from './ui';
+export * from './model';

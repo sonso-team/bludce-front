@@ -1,1 +1,1 @@
-export * from './ui/ConfirmForm';
+export * from './ui';

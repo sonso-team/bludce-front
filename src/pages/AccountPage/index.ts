@@ -1,1 +1,1 @@
-export * from './ui/AccountPage';
+export * from './ui';

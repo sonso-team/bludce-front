@@ -1,1 +1,1 @@
-export * from './ui/ApprovePage.tsx';
+export * from './ui';
