@@ -1,7 +1,7 @@
 import React from 'react';
 import './lobby-page.scss';
 import { Navigate } from 'react-router-dom';
-import { Header } from '../../../components/Header';
+import { Header } from '../../../widgets/Header';
 import { Button } from '../../../shared/Button';
 import { BillList } from '../../../widgets/BillList';
 import { Heading } from '../../../shared/Heading';

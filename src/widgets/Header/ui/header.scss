@@ -1,0 +1,20 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .GoBackButton {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  &__upper {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    font-family: var(--secondary-ff), sans-serif;
+  }
+  &_help {
+  }
+}

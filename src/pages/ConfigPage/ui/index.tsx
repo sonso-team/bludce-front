@@ -2,7 +2,7 @@ import React from 'react';
 import './config-page.scss';
 import { Navigate } from 'react-router-dom';
 import { Paragraph } from '../../../shared/Paragraph';
-import { Header } from '../../../components/Header';
+import { Header } from '../../../widgets/Header';
 import { Button } from '../../../shared/Button';
 import { Selector } from '../../../shared/Selector';
 import { CommonInput } from '../../../shared/СommonInput';

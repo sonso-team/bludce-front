@@ -1,6 +1,6 @@
 import React from 'react';
 import './home-page.scss';
-import { Header } from '../../../components/Header';
+import { Header } from '../../../widgets/Header';
 import { Paragraph } from '../../../shared/Paragraph';
 import { BillInput } from '../../../components/BillInput';
 import { Footer } from '../../../widgets/Footer';

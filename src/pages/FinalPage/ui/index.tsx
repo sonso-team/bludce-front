@@ -1,6 +1,6 @@
 import React from 'react';
 import './final-page.scss';
-import { Header } from '../../../components/Header';
+import { Header } from '../../../widgets/Header';
 import { Heading } from '../../../shared/Heading';
 import { BillList } from '../../../widgets/BillList';
 import { receiptTypes } from '../../../constants/enums/billEnums';

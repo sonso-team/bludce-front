@@ -3,7 +3,7 @@ import './approve-page.scss';
 import { Navigate } from 'react-router-dom';
 import { Paragraph } from '../../../shared/Paragraph';
 import { BillList } from '../../../widgets/BillList';
-import { Header } from '../../../components/Header';
+import { Header } from '../../../widgets/Header';
 import { Button } from '../../../shared/Button';
 import { useApprovePage } from '../api';
 

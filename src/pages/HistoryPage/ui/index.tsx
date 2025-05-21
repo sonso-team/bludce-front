@@ -1,7 +1,7 @@
 import React from 'react';
 import { Heading } from '../../../shared/Heading';
 import './history-page.scss';
-import { Header } from '../../../components/Header';
+import { Header } from '../../../widgets/Header';
 import { HistoryItem } from '../../../components/HistoryItem';
 import { useHistoryPage } from '../api';
 
