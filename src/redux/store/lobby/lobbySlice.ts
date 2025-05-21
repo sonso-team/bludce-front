@@ -70,7 +70,6 @@ const lobbySlice = createSlice({
         makePayment.fulfilled,
         (state, action: PayloadAction<IPaymentResponse>) => {
           state.isPayed = true;
-          state.amount = action.payload.amount;
           state.isLoading = false;
         },
       )
