@@ -17,7 +17,7 @@ const initialState: ILobbyState = {
   tipsAmount: null,
   tipsPercent: null,
   userAmount: null,
-  isIniciator: Boolean(localStorage.getItem('isIniciator')),
+  isIniciator: false,
   amount: null,
   fullAmount: null,
   tipsType: null,
@@ -30,16 +30,13 @@ const lobbySlice = createSlice({
   name: 'lobby',
   initialState,
   reducers: {
-    setIsIniciator(state) {
-      localStorage.setItem('isIniciator', 'true');
-      state.isIniciator = true;
-    },
     lobbyInit(state, action: PayloadAction<ILobbyMessage>) {
       state.isConnected = true;
       state.state = action.payload.state;
       state.userAmount = action.payload.userAmount;
       state.tipsAmount = action.payload.tipsAmount;
       state.tipsPercent = action.payload.tipsPercent;
+      state.isIniciator = action.payload.userId === action.payload.initiatorId;
       state.userId = action.payload.userId;
       state.amount = action.payload.amount;
       state.fullAmount = action.payload.fullAmount;
@@ -58,7 +55,6 @@ const lobbySlice = createSlice({
     lobbyClear(state) {
       state = initialState;
       localStorage.removeItem('userId');
-      localStorage.removeItem('isIniciator');
     },
   },
   extraReducers: (builder) => {
@@ -81,11 +77,6 @@ const lobbySlice = createSlice({
   },
 });
 
-export const {
-  setIsIniciator,
-  lobbyClear,
-  lobbyInit,
-  lobbyUpdate,
-  lobbyUpdateState,
-} = lobbySlice.actions;
+export const { lobbyClear, lobbyInit, lobbyUpdate, lobbyUpdateState } =
+  lobbySlice.actions;
 export default lobbySlice.reducer;

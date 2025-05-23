@@ -14,6 +14,7 @@ export const useFinalPage = () => {
 
   const closeHandler = () => {
     navigate('/home');
+    localStorage.removeItem('userId');
   };
 
   return {

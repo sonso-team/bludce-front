@@ -29,7 +29,7 @@ export const ApprovePage: React.FC = () => {
           />
           <div className="finalAmount">
             <Paragraph level={2}>Итого:</Paragraph>
-            <Paragraph level={2}>{finalAmount}р.</Paragraph>
+            <Paragraph level={2}>{finalAmount.toFixed(2)}р.</Paragraph>
           </div>
         </div>
         <Button

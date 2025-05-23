@@ -9,6 +9,7 @@ import {
   lobbyInit,
   lobbyUpdate,
   lobbyUpdateState,
+  setIsResult,
 } from '../../../redux/store/lobby';
 import { receiptTypes } from '../../../constants/enums/billEnums';
 import { ShareLinkModalBody } from '../ui/ShareLinkModalBosy';
@@ -28,6 +29,7 @@ export const useLobbyPage = () => {
     isLoading,
     state,
     isIniciator,
+    isResult,
     userId,
     fullAmount,
     tipsType,
@@ -42,8 +44,10 @@ export const useLobbyPage = () => {
 
   useEffect(() => {
     const restUrl = window.location.pathname.split('/').pop();
-    const lastUserId = localStorage.getItem('userId') || '';
-    const socket = getSocket(receiptId || restUrl, lastUserId);
+    const socket = getSocket(
+      receiptId || restUrl,
+      localStorage.getItem('userId') || '',
+    );
     socketRef.current = socket;
 
     const messageHandler = (message: MessageEvent) => {
@@ -60,7 +64,10 @@ export const useLobbyPage = () => {
 
     const reconnectHandler = () => {
       if (document.visibilityState === 'visible') {
-        const socket = getSocket(receiptId || restUrl, lastUserId);
+        const socket = getSocket(
+          receiptId || restUrl,
+          localStorage.getItem('userId') || '',
+        );
         socket.onmessage = messageHandler;
         socketRef.current = socket;
       }
@@ -73,6 +80,7 @@ export const useLobbyPage = () => {
     return () => {
       if (!isIniciator) {
         document.removeEventListener('visibilitychange', reconnectHandler);
+        localStorage.removeItem('userId');
         closeSocket();
       }
     };
@@ -140,9 +148,12 @@ export const useLobbyPage = () => {
   }, [finalUserAmount]);
 
   useEffect(() => {
-    if (isPayed) {
-      navigate('/final');
-    }
+    setTimeout(() => {
+      if (!isResult && isPayed) {
+        dispatch(setIsResult());
+        navigate('/final');
+      }
+    });
   }, [isPayed]);
 
   const backClickHandler = () => {

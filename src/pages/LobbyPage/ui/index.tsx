@@ -36,9 +36,9 @@ export const LobbyPage: React.FC = () => {
     tipsRef,
   } = useLobbyPage();
 
-  if (!isConfigured && isIniciator) {
-    return <Navigate to="/home" />;
-  }
+  // if (!isConfigured && isIniciator) {
+  //   return <Navigate to="/home" />;
+  // }
 
   if (isLoading) {
     return <Loader type="global" />;
