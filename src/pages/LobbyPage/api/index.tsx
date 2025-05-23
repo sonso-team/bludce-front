@@ -9,7 +9,6 @@ import {
   lobbyInit,
   lobbyUpdate,
   lobbyUpdateState,
-  setIsResult,
 } from '../../../redux/store/lobby';
 import { receiptTypes } from '../../../constants/enums/billEnums';
 import { ShareLinkModalBody } from '../ui/ShareLinkModalBosy';
@@ -29,7 +28,6 @@ export const useLobbyPage = () => {
     isLoading,
     state,
     isIniciator,
-    isResult,
     userId,
     fullAmount,
     tipsType,
@@ -149,8 +147,7 @@ export const useLobbyPage = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      if (!isResult && isPayed) {
-        dispatch(setIsResult());
+      if (isPayed) {
         navigate('/final');
       }
     });
