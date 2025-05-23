@@ -16,6 +16,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.6.1",
     "axios": "^1.8.4",
+    "browser-image-compression": "^2.0.2",
     "eslint-plugin-import": "^2.31.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

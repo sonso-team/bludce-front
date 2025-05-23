@@ -42,8 +42,10 @@ export const useLobbyPage = () => {
 
   useEffect(() => {
     const restUrl = window.location.pathname.split('/').pop();
-    const lastUserId = localStorage.getItem('userId') || '';
-    const socket = getSocket(receiptId || restUrl, lastUserId);
+    const socket = getSocket(
+      receiptId || restUrl,
+      localStorage.getItem('userId') || '',
+    );
     socketRef.current = socket;
 
     const messageHandler = (message: MessageEvent) => {
@@ -60,7 +62,10 @@ export const useLobbyPage = () => {
 
     const reconnectHandler = () => {
       if (document.visibilityState === 'visible') {
-        const socket = getSocket(receiptId || restUrl, lastUserId);
+        const socket = getSocket(
+          receiptId || restUrl,
+          localStorage.getItem('userId') || '',
+        );
         socket.onmessage = messageHandler;
         socketRef.current = socket;
       }
@@ -73,6 +78,7 @@ export const useLobbyPage = () => {
     return () => {
       if (!isIniciator) {
         document.removeEventListener('visibilitychange', reconnectHandler);
+        localStorage.removeItem('userId');
         closeSocket();
       }
     };
@@ -140,9 +146,11 @@ export const useLobbyPage = () => {
   }, [finalUserAmount]);
 
   useEffect(() => {
-    if (isPayed) {
-      navigate('/final');
-    }
+    setTimeout(() => {
+      if (isPayed) {
+        navigate('/final');
+      }
+    });
   }, [isPayed]);
 
   const backClickHandler = () => {

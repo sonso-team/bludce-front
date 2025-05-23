@@ -5,7 +5,6 @@ import { useModal } from '../../../utils/useModal';
 import type { SelectorRef } from '../../../shared/Selector';
 import type { InputRef } from '../../../shared/Input';
 import { clearError, clearReceiptData } from '../../../redux/store/bill';
-import { setIsIniciator } from '../../../redux/store/lobby';
 import { receiptTypes } from '../../../constants/enums/billEnums';
 import { hideLocalLoader, showLocalLoader } from '../../../redux/store/loader';
 import type { IBillConfig } from '../../../redux/store/bill/types';
@@ -39,7 +38,6 @@ export const useConfigPage = () => {
 
   useEffect(() => {
     if (isFetched && isConfigured) {
-      dispatch(setIsIniciator());
       navigate('/lobby');
     }
   }, [isConfigured]);
