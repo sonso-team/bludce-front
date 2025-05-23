@@ -1,1 +1,1 @@
-export * from './ui/RegForm';
+export * from './ui';

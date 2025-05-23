@@ -1,17 +1,8 @@
 import type React from 'react';
 import { Paragraph } from '../../../shared/Paragraph';
 import './bill-list.scss';
-import type { IBillStateItem } from '../../../redux/store/lobby/types';
+import type { IBillListProps } from '../model';
 import { BillRow } from './BillRow';
-
-interface IBillListProps {
-  billItems: IBillStateItem[];
-  isEditable?: boolean;
-  isLiveTime?: boolean;
-  onPick?: (item: IBillStateItem, index: number) => void;
-  myId?: string;
-  isIniciatorView?: boolean;
-}
 
 export const BillList: React.FC<IBillListProps> = ({ ...props }) => {
   const {

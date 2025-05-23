@@ -1,1 +1,1 @@
-export * from './ui/ConfigPage.tsx';
+export * from './ui';

@@ -1,2 +1,2 @@
-export * from './ui/Checkbox';
+export * from './ui';
 export * from './model';

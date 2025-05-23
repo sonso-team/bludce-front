@@ -1,1 +1,2 @@
-export * from './ui/Selector';
+export * from './ui';
+export * from './model';

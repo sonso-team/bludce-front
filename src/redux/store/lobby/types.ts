@@ -28,6 +28,7 @@ export interface ILobbyState {
 export interface ILobbyMessage {
   type: 'INIT' | 'UPDATE';
   state: IBillStateItem[];
+  initiatorId?: string;
   receiptType?: 'EVENLY' | 'PROPORTIONALLY';
   tipsType?: 'EVENLY' | 'PROPORTIONALLY' | 'NONE' | 'FOR_KICKS';
   userId?: string;

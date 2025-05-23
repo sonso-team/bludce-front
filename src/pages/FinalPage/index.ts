@@ -1,1 +1,1 @@
-export * from './ui/FinalPage';
+export * from './ui';
